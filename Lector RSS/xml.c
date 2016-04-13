@@ -5,8 +5,8 @@
  *      Author: gotzo
  */
 #include <stdio.h>
-#include <libxml/parser.h>
-#include <libxml/tree.h>
+#include "libxml/include/libxml/parser.h"
+#include "libxml/include/libxml/tree.h"
 
 static void print_element_names(xmlNode * a_node)
  {
