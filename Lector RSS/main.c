@@ -10,7 +10,6 @@
 int main (void){
 	char funcMenu;
 	bool repetir;
-	repetir = false;
 	do
 	{
 		repetir = false;
@@ -26,7 +25,7 @@ int main (void){
 				case '4':
 					break;
 				default:
-					printf("¡Opción incorrecta!");
+					printf("¡Opción incorrecta!\n\n");
 					repetir = true;
 					break;
 			}
