@@ -1,47 +1,22 @@
-/*
- * xml.c
- *
- *  Created on: 13 de abr. de 2016
- *      Author: gotzo
- */
-#include <stdio.h>
-#include "libxml/include/libxml/parser.h"
-#include "libxml/include/libxml/tree.h"
-
-static void print_element_names(xmlNode * a_node)
- {
-   xmlNode *cur_node = NULL;
-
-     for (cur_node = a_node; cur_node; cur_node =
-         cur_node->next) {
-      if (cur_node->type == XML_ELEMENT_NODE) {
-         printf("node type: Element, name: %s\n",
-               cur_node->name);
-       }
-       print_element_names(cur_node->children);
-    }
- }
-
- int main(int argc, char **argv)
- {
-    xmlDoc *doc = NULL;
-    xmlNode *root_element = NULL;
-
-    if (argc != 2)  return(1);
-
-    LIBXML_TEST_VERSION    // Macro to check API for match with
-                             // the DLL we are using
-
-    /*parse the file and get the DOM */
-    if (doc = xmlReadFile(argv[1], NULL, 0)) == NULL){
-       printf("error: could not parse file %s\n", argv[1]);
-       exit(-1);
-       }
-
-    /*Get the root element node */
-    root_element = xmlDocGetRootElement(doc);
-    print_element_names(root_element);
-    xmlFreeDoc(doc);       // free document
-    xmlCleanupParser();    // Free globals
-    return 0;
- }
+int main(void)
+{
+xmlDocPtr doc = NULL;
+xmlNodePtr nodo;
+doc = xmlParseFile("archivo.xml"); // linea 5
+if(!doc) // error (comunmente que el archivo no existe)
+return -1;
+nodo = xmlDocGetRootElement(doc); // linea 10
+// veamos como se llama nuestra raiz:
+printf("%sn" , nodo->name);
+// Nos movemos al nodo hijo, e imprimimos su nombre
+nodo = nodo->xmlChildrenNode; // linea 16
+while(xmlNodeIsText(nodo) && nodo) // linea 17
+nodo = nodo->next; // linea 18
+printf("%sn", nodo->name);
+// extraemos la información del nodo y la imprimimos
+xmlChar *text = xmlNodeListGetString(doc, nodo->xmlChildrenNode,1);
+printf("%sn", text); // linea 23
+xmlFreeDoc(doc);
+// aljover.com
+return 1;
+}
