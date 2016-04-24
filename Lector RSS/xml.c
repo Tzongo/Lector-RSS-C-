@@ -1,4 +1,5 @@
-#include <libxml/parser.h>
+#include <libxml2-2.7.8.win32/include/libxml/parser.h>
+#include <iconv.h>
 int main(void)
 {
 xmlDocPtr doc = NULL;

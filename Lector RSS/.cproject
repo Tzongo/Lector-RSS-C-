@@ -29,22 +29,16 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.mingw.exe.debug.option.optimization.level.1372271608" name="Optimization Level" superClass="gnu.c.compiler.mingw.exe.debug.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.mingw.exe.debug.option.debugging.level.442045625" name="Debug Level" superClass="gnu.c.compiler.mingw.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.584623004" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/libreriasXMLC/iconv-1.9.2.win32/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/libreriasXMLC/libxml2-2.7.8.win32/bin}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/libreriasXMLC/libxml2-2.7.8.win32/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/libreriasXMLC/libxml2-2.7.8.win32/lib}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\gotzon\Desktop\libreriasXMLC&quot;"/>
 								</option>
-								<option id="gnu.c.compiler.option.include.files.1946680004" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" valueType="includeFiles">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/libreriasXMLC/libxml2-2.7.8.win32/bin/libxml2.dll}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/libreriasXMLC/iconv-1.9.2.win32/bin/iconv.dll}&quot;"/>
-								</option>
+								<option id="gnu.c.compiler.option.include.files.1946680004" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" valueType="includeFiles"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.422573084" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.723819466" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug">
-								<option id="gnu.c.link.option.libs.651035017" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="${workspace_loc:/${ProjName}/libreriasXMLC/iconv.dll}"/>
+								<option id="gnu.c.link.option.libs.651035017" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs"/>
+								<option id="gnu.c.link.option.paths.1174801266" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/libxml2.dll}&quot;"/>
 								</option>
-								<option id="gnu.c.link.option.paths.1174801266" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1894456170" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -128,4 +122,5 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
