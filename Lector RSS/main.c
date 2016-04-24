@@ -25,7 +25,7 @@ int main (void){
 				case '4':
 					break;
 				default:
-					printf("¡Opción incorrecta!\n\n");
+					printf("ï¿½Opciï¿½n incorrecta!\n\n");
 					repetir = true;
 					break;
 			}

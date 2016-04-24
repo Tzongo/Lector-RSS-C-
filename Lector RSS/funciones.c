@@ -9,12 +9,12 @@
 
 char mostrarMenu()
 {
-	printf("MENÚ PRINCIPAL\n"
+	printf("MENï¿½ PRINCIPAL\n"
 			"1.\tVisualizar RSS\n"
 			"2.\tEditar RSS\n"
-			"3.\tEstadísticas\n"
+			"3.\tEstadï¿½sticas\n"
 			"4.\tSalir\n\n"
-			"Introduzca número de la función deseada:\n");
+			"Introduzca nï¿½mero de la funciï¿½n deseada:\n");
 	fflush(stdout);
 	char resultado;
 	resultado = getchar();
