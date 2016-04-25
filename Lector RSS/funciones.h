@@ -9,5 +9,7 @@
 #define FUNCIONES_H_
 
 char mostrarMenu();
+char* substr();
+int _find();
 
 #endif /* FUNCIONES_H_ */

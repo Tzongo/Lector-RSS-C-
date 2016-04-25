@@ -28,9 +28,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1338111698" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.mingw.exe.debug.option.optimization.level.1372271608" name="Optimization Level" superClass="gnu.c.compiler.mingw.exe.debug.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.mingw.exe.debug.option.debugging.level.442045625" name="Debug Level" superClass="gnu.c.compiler.mingw.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.584623004" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
-								</option>
+								<option id="gnu.c.compiler.option.include.paths.584623004" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
 								<option id="gnu.c.compiler.option.include.files.1946680004" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.422573084" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>

@@ -6,6 +6,8 @@
  */
 #include "funciones.h"
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 char mostrarMenu()
 {
@@ -22,3 +24,30 @@ char mostrarMenu()
 	return resultado;
 }
 
+char* substr(char* cadena, int comienzo, int longitud)
+{
+	if (longitud == 0) longitud = strlen(cadena)-comienzo-1;
+
+	char *nuevo = (char*)malloc(sizeof(char) * longitud);
+
+	strncpy(nuevo, cadena + comienzo, longitud);
+
+	return nuevo;
+}
+int _find(char* cadena, char* palabra){
+
+    int i, j = 0;
+
+    for(i = 0; i < strlen(cadena); i++){
+        if(palabra[j] == cadena[i]){
+            ++j;
+
+            if(j == strlen(palabra))
+                return (2 + i - j);
+        }
+
+        else j = 0;
+    }
+
+    return -1;
+}

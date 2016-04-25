@@ -1,27 +1,33 @@
-/*
- * xml.c
- *
- *  Created on: 25/4/2016
- *      Author: gotzon.gerri
- */
-#include <libxml/parser.h>
-#include <iconv.h>
-int main(void)
+#include<stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include "funciones.h"
+#include <string.h>
+int main()
 {
-xmlDocPtr doc = NULL;
-xmlNodePtr nodo;
-doc = xmlParseFile("pruebasRss.xml");
-if(!doc)
-return -1;
-nodo = xmlDocGetRootElement(doc);
-printf("%sn" , nodo->name);
-nodo = nodo->xmlChildrenNode;
-while(xmlNodeIsText(nodo) && nodo)
-nodo = nodo->next;
-printf("%sn", nodo->name);
-xmlChar *text = xmlNodeListGetString(doc, nodo->xmlChildrenNode,1);
-printf("%sn", text);
-xmlFreeDoc(doc);
-return 1;
-}
+		FILE *ptr_file;
+		char *buf;
+		int s=-1;
+		ptr_file =fopen("pruebasRss.xml","r");
+		if (!ptr_file){
+		printf("file not found!\n");
+		getch();
+		return 0;
+		}
 
+		fseek(ptr_file, 0, SEEK_END);
+		s = ftell(ptr_file);
+		fseek(ptr_file, 0, SEEK_SET);
+		buf=(char*)malloc(s*sizeof(char));
+		while (fgets(buf,s, ptr_file)!=NULL){
+			printf(substr(buf,0,6));
+			/*if (substr(buf,0,6) =="<item>") {
+				printf("%s proba",buf);
+			}*/
+			//printf("%s",buf);
+		}
+	fclose(ptr_file);
+	getch();
+		return 0;
+}
