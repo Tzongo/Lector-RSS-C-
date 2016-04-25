@@ -1,24 +1,20 @@
-#include <libxml2-2.7.8.win32/include/libxml/parser.h>
+#include <libxml/parser.h>
 #include <iconv.h>
 int main(void)
 {
 xmlDocPtr doc = NULL;
 xmlNodePtr nodo;
-doc = xmlParseFile("pruebasRss.xml"); // linea 5
-if(!doc) // error (comunmente que el archivo no existe)
+doc = xmlParseFile("pruebasRss.xml");
+if(!doc)
 return -1;
-nodo = xmlDocGetRootElement(doc); // linea 10
-// veamos como se llama nuestra raiz:
+nodo = xmlDocGetRootElement(doc);
 printf("%sn" , nodo->name);
-// Nos movemos al nodo hijo, e imprimimos su nombre
-nodo = nodo->xmlChildrenNode; // linea 16
-while(xmlNodeIsText(nodo) && nodo) // linea 17
-nodo = nodo->next; // linea 18
+nodo = nodo->xmlChildrenNode;
+while(xmlNodeIsText(nodo) && nodo)
+nodo = nodo->next;
 printf("%sn", nodo->name);
-// extraemos la informaci�n del nodo y la imprimimos
 xmlChar *text = xmlNodeListGetString(doc, nodo->xmlChildrenNode,1);
-printf("%sn", text); // linea 23
+printf("%sn", text);
 xmlFreeDoc(doc);
-// aljover.com
 return 1;
 }
