@@ -1,3 +1,9 @@
+/*
+ * xml.c
+ *
+ *  Created on: 25/4/2016
+ *      Author: gotzon.gerri
+ */
 #include <libxml/parser.h>
 #include <iconv.h>
 int main(void)
@@ -18,3 +24,4 @@ printf("%sn", text);
 xmlFreeDoc(doc);
 return 1;
 }
+
