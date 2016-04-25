@@ -20,11 +20,15 @@ int main()
 		s = ftell(ptr_file);
 		fseek(ptr_file, 0, SEEK_SET);
 		buf=(char*)malloc(s*sizeof(char));
+		int p1,p2;
 		while (fgets(buf,s, ptr_file)!=NULL){
 			if (_find(buf,"<item>")!=-1) {
 				printf("\nNuevo Item:-----------------------\n");
 			}else if (_find(buf,"<title>")!=-1) {
-				printf("%s\n",buf);
+				p1=_find(buf,"<title>");
+				p2=_find(buf,"]]>");
+				char* str;str=substr(buf,p1+16,p2-11);
+				printf("%s\n",str);
 			}
 			else if (_find(buf,"<pubDate>")!=-1) {
 				printf("%s\n",buf);
