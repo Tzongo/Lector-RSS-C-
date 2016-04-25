@@ -187,7 +187,7 @@ Info infoRss(char* nombre)
 					strcat(inform.items, &numItem);
 					if(contItem==1)
 					{
-						strcat(inform.items, ". ");
+						strcpy(inform.items, "1. ");
 					}
 					strcat(inform.items, str);
 					strcat(inform.items, "\n");
@@ -211,7 +211,7 @@ Info infoRss(char* nombre)
 				strcat(inform.fuentes, &numFuente);
 				if(contFuente==1)
 				{
-					strcat(inform.fuentes, ". ");
+					strcpy(inform.fuentes, "1. ");
 				}
 				strcat(inform.fuentes, str);
 				strcat(inform.fuentes, "\n");
