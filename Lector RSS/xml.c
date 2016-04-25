@@ -21,11 +21,22 @@ int main()
 		fseek(ptr_file, 0, SEEK_SET);
 		buf=(char*)malloc(s*sizeof(char));
 		while (fgets(buf,s, ptr_file)!=NULL){
-			printf(substr(buf,0,6));
-			/*if (substr(buf,0,6) =="<item>") {
-				printf("%s proba",buf);
-			}*/
-			//printf("%s",buf);
+			if (_find(buf,"<item>")!=-1) {
+				printf("\nNuevo Item:-----------------------\n");
+			}else if (_find(buf,"<title>")!=-1) {
+				printf("%s\n",buf);
+			}
+			else if (_find(buf,"<pubDate>")!=-1) {
+				printf("%s\n",buf);
+			}else if (_find(buf,"<link>")!=-1) {
+				printf("%s\n",buf);
+			}else if (_find(buf,"<description>")!=-1) {
+				printf("%s\n",buf);
+				printf("Fin Item;-------------------\n");
+			}
+			else if(_find(buf,"</rss>")!=-1){
+				return 0;
+			}
 		}
 	fclose(ptr_file);
 	getch();
