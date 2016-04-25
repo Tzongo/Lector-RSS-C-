@@ -9,8 +9,7 @@
 #define FUNCIONES_H_
 
 char mostrarMenu();
-char* substr();
 char* substring();
 int _find();
-
+int abrirRss(char* nombre);
 #endif /* FUNCIONES_H_ */

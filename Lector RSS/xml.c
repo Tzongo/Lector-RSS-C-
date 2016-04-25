@@ -4,12 +4,12 @@
 #include <unistd.h>
 #include "funciones.h"
 #include <string.h>
-int main()
+int abrirRss2(char* nombre)
 {
 	FILE *ptr_file;
 	char *buf;
 	int s=-1;
-	ptr_file =fopen("pruebasRss.xml","r");
+	ptr_file =fopen(nombre,"r");
 	if (!ptr_file){
 		printf("file not found!\n");
 		getch();
@@ -26,17 +26,15 @@ int main()
 		if (_find(buf,"<item>")!=-1) {
 			printf("\nNuevo Item:-----------------------\n");
 		}else if (_find(buf,"<title>")!=-1) {
+			p1=_find(buf,"<title>");
+			p2=_find(buf,"]]></title>");
 			if (cont==0) {
-				p1=_find(buf,"<title>");
-				p2=_find(buf,"]]></title>");
 				char* str;
 				str=substring(buf,p1+7,(p2-1)-(p1+6));
 				printf("%s\n",str);
 				cont++;
 			}
 			else{
-				p1=_find(buf,"<title>");
-				p2=_find(buf,"]]></title>");
 				char* str;
 				str=substring(buf,p1+17,(p2-1)-(p1+17));
 				printf("%s\n",str);

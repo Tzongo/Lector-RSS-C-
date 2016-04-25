@@ -17,6 +17,14 @@ int main (void){
 		switch (funcMenu)
 			{
 				case '1':
+						printf("Introduce nombre del archivo: \n");
+						fflush(stdout);
+						char nombre[20];
+						scanf("%s",nombre);
+						fflush(stdin);
+						printf("%s",nombre);
+						abrirRss(nombre);
+						repetir=true;
 					break;
 				case '2':
 					break;
@@ -25,7 +33,7 @@ int main (void){
 				case '4':
 					break;
 				default:
-					printf("ï¿½Opciï¿½n incorrecta!\n\n");
+					printf("\n¡Opcion incorrecta!\n\n");
 					repetir = true;
 					break;
 			}
