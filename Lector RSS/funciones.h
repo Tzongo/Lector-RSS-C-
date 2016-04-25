@@ -10,6 +10,7 @@
 
 char mostrarMenu();
 char* substr();
+char* substring();
 int _find();
 
 #endif /* FUNCIONES_H_ */

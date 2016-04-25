@@ -24,15 +24,28 @@ char mostrarMenu()
 	return resultado;
 }
 
-char* substr(char* cadena, int comienzo, int longitud)
+char *substring(char *string, int position, int length)
 {
-	if (longitud == 0) longitud = strlen(cadena)-comienzo-1;
+   char *pointer;
+   int c;
 
-	char *nuevo = (char*)malloc(sizeof(char) * longitud);
+   pointer = malloc(length+1);
 
-	strncpy(nuevo, cadena + comienzo, longitud);
+   if (pointer == NULL)
+   {
+      printf("Unable to allocate memory.\n");
+      exit(1);
+   }
 
-	return nuevo;
+   for (c = 0 ; c < length ; c++)
+   {
+      *(pointer+c) = *(string+position-1);
+      string++;
+   }
+
+   *(pointer+c) = '\0';
+
+   return pointer;
 }
 int _find(char* cadena, char* palabra){
 
