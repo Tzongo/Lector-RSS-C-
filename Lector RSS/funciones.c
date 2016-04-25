@@ -75,7 +75,7 @@ int abrirRss(char* nombre)
 	int s=-1;
 	ptr_file =fopen(nombre,"r");
 	if (!ptr_file){
-		printf("\n¡Archivo no encotrado!\n");
+		printf("\nï¿½Archivo no encotrado!\n");
 		//getch();
 		return 0;
 	}
@@ -88,7 +88,7 @@ int abrirRss(char* nombre)
 	while (fgets(buf,s, ptr_file)!=NULL){
 		int p1,p2;
 		if (_find(buf,"<item>")!=-1) {
-			printf("\nNuevo Item:-----------------------\n");
+			printf("\n-----------------------\n");
 		}else if (_find(buf,"<title>")!=-1) {
 			p1=_find(buf,"<title>");
 			p2=_find(buf,"]]></title>");
@@ -123,7 +123,7 @@ int abrirRss(char* nombre)
 			char* str;
 			str=substring(buf,p1+23,(p2-1)-(p1));
 			printf("%s\n",str);
-			printf("Fin Item;-------------------\n");
+			printf("-------------------\n");
 		}
 		else if(_find(buf,"</rss>")!=-1){
 			return 0;
