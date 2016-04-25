@@ -95,7 +95,7 @@ int abrirRss(char* nombre)
 			if (cont==0) {
 				char* str;
 				str=substring(buf,p1+7,(p2-1)-(p1+6));
-				printf("%s\n",str);
+				printf("\n\n%s\n",str);
 				cont++;
 			}
 			else{
@@ -119,7 +119,7 @@ int abrirRss(char* nombre)
 			printf("%s\n",str);
 		}else if (_find(buf,"<description>")!=-1) {
 			p1=_find(buf,"<description><![CDATA[ ");
-			p2=_find(buf,"]]></description");
+			p2=_find(buf,"]]></description>");
 			char* str;
 			str=substring(buf,p1+23,(p2-1)-(p1));
 			printf("%s\n",str);
