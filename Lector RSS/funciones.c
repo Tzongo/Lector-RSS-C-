@@ -17,7 +17,7 @@ char mostrarMenu()
 	printf("MENU PRINCIPAL\n"
 			"1.\tVisualizar RSS\n"
 			"2.\tEditar RSS\n"
-			"3.\tEstadisticas\n"
+			"3.\tInformacion RSS\n"
 			"4.\tSalir\n\n"
 			"Introduzca numero de la funcion deseada:\n");
 	fflush(stdout);
@@ -75,7 +75,7 @@ int abrirRss(char* nombre)
 	int s=-1;
 	ptr_file =fopen(nombre,"r");
 	if (!ptr_file){
-		printf("\n�Archivo no encotrado!\n");
+		printf("\n\nArchivo no encotrado!\n\n");
 		//getch();
 		return 0;
 	}
@@ -132,5 +132,96 @@ int abrirRss(char* nombre)
 	fclose(ptr_file);
 	getch();
 	return 0;
+}
+
+Info infoRss(char* nombre)
+{
+	FILE *ptr_file;
+		char *buf;
+		int s=-1;
+		ptr_file =fopen(nombre,"r");
+		if (!ptr_file){
+			printf("\n\nArchivo no encotrado!\n\n");
+			//getch();
+
+		}
+
+		fseek(ptr_file, 0, SEEK_END);
+		s = ftell(ptr_file);
+		fseek(ptr_file, 0, SEEK_SET);
+		int contTitulo;contTitulo=0;
+		int contItem;contItem=1;
+		char numItem[10];
+		sprintf(numItem, "%d", contItem);
+		strcat(numItem, ". ");
+		int contFuente;contFuente=1;
+		char numFuente[10];
+		sprintf(numFuente, "%d", contFuente);
+		strcat(numFuente, ". ");
+		buf=(char*)malloc(s*sizeof(char));
+		int numCaracteres = 0;
+//		while (fgets(buf,s, ptr_file)!=NULL){
+//			numCaracteres += strlen(buf);
+//		}
+
+		Info inform;
+		inform.tituloRss = (char*)malloc(200 * sizeof(char));
+		inform.autorRss = (char*)malloc(200 * sizeof(char));
+		inform.items = (char*)malloc(10000 * sizeof(char));
+		inform.fuentes = (char*)malloc(10000 * sizeof(char));
+		while (fgets(buf,s, ptr_file)!=NULL){
+			int p1, p2;
+			if (_find(buf,"<title>")!=-1) {
+				p1=_find(buf,"<title>");
+				p2=_find(buf,"]]></title>");
+				if (contTitulo==0) {
+					char* str;
+					str=substring(buf,p1+7,(p2-1)-(p1+6));
+					strcpy(inform.tituloRss, str);
+					strcat(inform.tituloRss, "\n");
+					contTitulo++;
+				}
+				else{
+					char* str;
+					str=substring(buf,p1+17,(p2-1)-(p1+17));
+					strcat(inform.items, &numItem);
+					if(contItem==1)
+					{
+						strcat(inform.items, ". ");
+					}
+					strcat(inform.items, str);
+					strcat(inform.items, "\n");
+					contItem++;
+					sprintf(numItem, "%d", contItem);
+					strcat(numItem, ". ");
+				}
+
+			}else if (_find(buf,"<author>")!=-1) {
+				p1=_find(buf,"<author>");
+				p2=_find(buf,"</author>");
+				char* str;
+				str=substring(buf,p1+8,(p2-1)-(p1+7));
+				strcpy(inform.autorRss, str);
+				strcat(inform.autorRss, "\n");
+			}else if (_find(buf,"<link>")!=-1) {
+				p1=_find(buf,"<link>");
+				p2=_find(buf,"</link>");
+				char* str;
+				str=substring(buf,p1+6,(p2-1)-(p1+5));
+				strcat(inform.fuentes, &numFuente);
+				if(contFuente==1)
+				{
+					strcat(inform.fuentes, ". ");
+				}
+				strcat(inform.fuentes, str);
+				strcat(inform.fuentes, "\n");
+				contFuente++;
+				sprintf(numFuente, "%d", contFuente);
+				strcat(numFuente, ". ");
+			}
+
+		}
+		return inform;
+
 }
 
