@@ -6,33 +6,32 @@
  */
 
 #include "Noticia.h"
-
+using namespace std;
 Noticia::Noticia() {
 	// TODO Auto-generated constructor stub
-
 }
-Noticia::Noticia(char titulo,char autor,char desc) {
+Noticia::Noticia(string titulo,string autor,string desc) {
 	// TODO Auto-generated constructor stub
 	this->titulo = titulo;
 	this->autor = autor;
 	this->descripcion = desc;
 }
-char* Noticia::getAutor(){
+string Noticia::getAutor(){
 	return autor;
 }
-char* Noticia::getDescripcion(){
+string Noticia::getDescripcion(){
 	return descripcion;
 }
-char* Noticia::getTitulo(){
+string Noticia::getTitulo(){
 	return titulo;
 }
-void Noticia::setTitulo(char titulo){
+void Noticia::setTitulo(string titulo){
 	this->titulo = titulo;
 }
-void Noticia::setAutor(char autor){
+void Noticia::setAutor(string autor){
 	this->autor = autor;
 }
-void Noticia::setDescripcion(char desc){
+void Noticia::setDescripcion(string desc){
 	this->descripcion = desc;
 }
 Noticia::~Noticia() {
