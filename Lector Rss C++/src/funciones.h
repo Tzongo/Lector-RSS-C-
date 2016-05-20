@@ -24,5 +24,6 @@ Info infoRss(char* nombre);
 Noticia* nuevaNoticia();
 void mostrarNoticia(Noticia* n);
 list<Noticia*> crearRss() ;
+Noticia* get(list<Noticia*> _list, int _i);
 
 #endif /* FUNCIONES_H_ */

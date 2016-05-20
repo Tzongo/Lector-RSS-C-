@@ -67,11 +67,11 @@ Noticia* nuevaNoticia() {
 	return n;
 }
 void mostrarNoticia(Noticia* n) {
-	printf("Titulo de la noticia: \n", n->getTitulo().c_str());
+	printf("Titulo de la noticia: %s\n", n->getTitulo().c_str());
 	fflush(stdout);
-	printf("Autor de la noticia: \n", n->getAutor().c_str());
+	printf("Autor de la noticia: %s\n", n->getAutor().c_str());
 	fflush(stdout);
-	printf("Descripcion de la noticia: \n", n->getDescripcion().c_str());
+	printf("Descripcion de la noticia: %s\n", n->getDescripcion().c_str());
 	fflush(stdout);
 }
 
@@ -273,3 +273,11 @@ void mostrarNoticia(Noticia* n) {
 
  }
  */
+
+Noticia* get(list<Noticia*> _list, int _i){
+    list<Noticia*>::iterator it = _list.begin();
+    for(int i=0; i<_i; i++){
+        ++it;
+    }
+    return *it;
+}

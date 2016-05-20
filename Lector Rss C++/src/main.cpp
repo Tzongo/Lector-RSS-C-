@@ -39,8 +39,14 @@ int main(void) {
 			fflush(stdout);
 			scanf("%s", tituloRSS.c_str());
 			fflush(stdin);
+
 			noticias=crearRss();
 			//mostrarNoticia(nuevaNoticia());
+			int i;
+			for(i=0;i<noticias.size();i++)
+			{
+				mostrarNoticia(get(noticias,i));
+			}
 			break;
 		case '4':
 			printf("Introduce nombre (con extension) del archivo: \n");
