@@ -17,8 +17,9 @@ char mostrarMenu()
 	printf("MENU PRINCIPAL\n"
 			"1.\tVisualizar RSS\n"
 			"2.\tEditar RSS\n"
-			"3.\tInformacion RSS\n"
-			"4.\tSalir\n\n"
+			"3.\tCrear RSS\n"
+			"4.\tInformacion RSS\n"
+			"5.\tSalir\n\n"
 			"Introduzca numero de la funcion deseada:\n");
 	fflush(stdout);
 	char resultado;
