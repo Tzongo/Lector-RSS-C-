@@ -5,6 +5,7 @@
  *      Author: Jon
  */
 #include "Noticia.h"
+#include <list>
 #ifndef FUNCIONES_H_
 #define FUNCIONES_H_
 
@@ -22,5 +23,6 @@ int abrirRss(char* nombre);
 Info infoRss(char* nombre);
 Noticia* nuevaNoticia();
 void mostrarNoticia(Noticia* n);
+list<Noticia*> crearRss() ;
 
 #endif /* FUNCIONES_H_ */

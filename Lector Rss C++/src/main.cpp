@@ -14,6 +14,7 @@ int main(void) {
 	char funcMenu;
 	bool repetir;
 	Noticia* n;
+	string tituloRSS;
 	do {
 		repetir = true;
 		funcMenu = mostrarMenu();
@@ -31,9 +32,13 @@ int main(void) {
 		case '2':
 			break;
 		case '3':
-			cout << "!!!Hello World!!!" << endl;
 
-			mostrarNoticia(nuevaNoticia());
+			printf("Introduce titulo del RSS: \n");
+			fflush(stdout);
+			scanf("%s", tituloRSS.c_str());
+			fflush(stdin);
+			crearRss();
+			//mostrarNoticia(nuevaNoticia());
 			break;
 		case '4':
 			printf("Introduce nombre (con extension) del archivo: \n");

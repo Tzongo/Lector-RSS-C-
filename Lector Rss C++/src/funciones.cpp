@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "Noticia.h"
+#include <list>
 using namespace std;
 char mostrarMenu() {
 	printf("MENU PRINCIPAL\n"
@@ -27,10 +28,16 @@ char mostrarMenu() {
 	fflush(stdin);
 	return resultado;
 }
-
+list<Noticia*> crearRss() {
+	list<Noticia*> noticias;
+	bool fin = false;
+	do {
+		noticias.push_back(nuevaNoticia());
+	} while (!fin);
+}
 Noticia* nuevaNoticia() {
 
-	Noticia* n=new Noticia();
+	Noticia* n = new Noticia();
 	printf("Introduce titulo de la noticia: \n");
 	fflush(stdout);
 	string titulo;
@@ -55,11 +62,11 @@ Noticia* nuevaNoticia() {
 	return n;
 }
 void mostrarNoticia(Noticia* n) {
-	printf("Titulo de la noticia: \n",n->getTitulo().c_str());
+	printf("Titulo de la noticia: \n", n->getTitulo().c_str());
 	fflush(stdout);
-	printf("Autor de la noticia: \n",n->getAutor().c_str());
+	printf("Autor de la noticia: \n", n->getAutor().c_str());
 	fflush(stdout);
-	printf("Descripcion de la noticia: \n",n->getDescripcion().c_str());
+	printf("Descripcion de la noticia: \n", n->getDescripcion().c_str());
 	fflush(stdout);
 }
 
