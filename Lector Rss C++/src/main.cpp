@@ -9,12 +9,14 @@
 #include "Noticia.h"
 #include "funciones.h"
 #include <stdbool.h>
+#include <list>
 using namespace std;
 int main(void) {
 	char funcMenu;
 	bool repetir;
 	Noticia* n;
 	string tituloRSS;
+	list<Noticia*> noticias;
 	do {
 		repetir = true;
 		funcMenu = mostrarMenu();
@@ -37,7 +39,7 @@ int main(void) {
 			fflush(stdout);
 			scanf("%s", tituloRSS.c_str());
 			fflush(stdin);
-			crearRss();
+			noticias=crearRss();
 			//mostrarNoticia(nuevaNoticia());
 			break;
 		case '4':

@@ -30,10 +30,15 @@ char mostrarMenu() {
 }
 list<Noticia*> crearRss() {
 	list<Noticia*> noticias;
-	bool fin = false;
+	char fin = 'n';
 	do {
 		noticias.push_back(nuevaNoticia());
-	} while (!fin);
+		printf("Quieres introudcir mas noticias? s/n \n");
+		fflush(stdout);
+		scanf("%c", &fin);
+		fflush(stdin);
+	} while (fin=='s');
+	return noticias;
 }
 Noticia* nuevaNoticia() {
 
