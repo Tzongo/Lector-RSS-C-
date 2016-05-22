@@ -10,13 +10,19 @@
 #include "funciones.h"
 #include <stdbool.h>
 #include <list>
+#include <sqlite3.h>
 using namespace std;
+
 int main(void) {
 	char funcMenu;
 	bool repetir;
 	Noticia* n;
-	string tituloRSS;
-	list<Noticia*> noticias;
+
+
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	conectarBD(db, rc);
 	do {
 		repetir = true;
 		funcMenu = mostrarMenu();
@@ -34,19 +40,22 @@ int main(void) {
 		case '2':
 			break;
 		case '3':
-
+		{
+			list<Noticia*> noticias;
+			string tituloRSS;
 			printf("Introduce titulo del RSS: \n");
 			fflush(stdout);
 			scanf("%s", tituloRSS.c_str());
 			fflush(stdin);
 
-			noticias=crearRss();
+			crearRss(tituloRSS, &noticias);
 			//mostrarNoticia(nuevaNoticia());
 			int i;
 			for(i=0;i<noticias.size();i++)
 			{
 				mostrarNoticia(get(noticias,i));
 			}
+		}
 			break;
 		case '4':
 			printf("Introduce nombre (con extension) del archivo: \n");

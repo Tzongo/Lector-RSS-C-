@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include "Noticia.h"
 #include <list>
-#include "sqlite3.h"
+#include <sqlite3.h>
 using namespace std;
 char mostrarMenu() {
 	printf("MENU PRINCIPAL\n"
@@ -29,17 +29,17 @@ char mostrarMenu() {
 	fflush(stdin);
 	return resultado;
 }
-list<Noticia*> crearRss() {
-	list<Noticia*> noticias;
+void crearRss(string nombreRSS, list<Noticia*>* noticias) {
+
 	char fin = 'n';
 	do {
-		noticias.push_back(nuevaNoticia());
+		noticias->push_back(nuevaNoticia());
 		printf("Quieres introudcir mas noticias? s/n \n");
 		fflush(stdout);
 		scanf("%c", &fin);
 		fflush(stdin);
 	} while (fin=='s');
-	return noticias;
+
 }
 Noticia* nuevaNoticia() {
 
@@ -76,7 +76,26 @@ void mostrarNoticia(Noticia* n) {
 	fflush(stdout);
 }
 
+void conectarBD(sqlite3* db, int rc)
+{
+	rc = sqlite3_open("xmlbd.s3db", &db);
 
+	if( rc ){
+	  fprintf(stderr, "Error al abrir BD: %s\n", sqlite3_errmsg(db));
+	  exit(0);
+	}else{
+	  fprintf(stderr, "Base de datos abierta exitosamente\n");
+	}
+
+}
+
+void almacenarEnBD(string nombreRSS, list<Noticia*> noticias){
+
+	unsigned int i;
+	for(i = 0; i<noticias.size(); i++){
+
+	}
+}
 
 /*
  char *substring(char *string, int position, int length)
