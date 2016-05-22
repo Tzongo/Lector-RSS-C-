@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include "Noticia.h"
 #include <list>
+#include "sqlite3.h"
 using namespace std;
 char mostrarMenu() {
 	printf("MENU PRINCIPAL\n"
@@ -74,6 +75,8 @@ void mostrarNoticia(Noticia* n) {
 	printf("Descripcion de la noticia: %s\n", n->getDescripcion().c_str());
 	fflush(stdout);
 }
+
+
 
 /*
  char *substring(char *string, int position, int length)
