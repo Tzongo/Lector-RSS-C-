@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include "Noticia.h"
 #include <list>
-#include <sqlite3.h>
+#include "sqlite3.h"
 using namespace std;
 char mostrarMenu() {
 	printf("MENU PRINCIPAL\n"

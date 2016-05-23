@@ -5,7 +5,7 @@
  *      Author: Jon
  */
 #include "Noticia.h"
-#include <sqlite3.h>
+#include "sqlite3.h"
 #include <list>
 #ifndef FUNCIONES_H_
 #define FUNCIONES_H_
