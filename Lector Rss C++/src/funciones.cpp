@@ -99,6 +99,7 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName){
    printf("\n");
    return 0;
 }
+//lalalal
 
 void almacenarEnBD(string nombreRSS, list<Noticia*> noticias){
 	sqlite3* db;
