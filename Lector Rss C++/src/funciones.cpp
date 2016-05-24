@@ -86,15 +86,47 @@ void conectarBD(sqlite3* db, int rc)
 	}else{
 	  fprintf(stderr, "Base de datos abierta exitosamente\n");
 	}
-
+}
+void cerrarBD(sqlite3* db)
+{
+	sqlite3_close(db);
+}
+static int callback(void *NotUsed, int argc, char **argv, char **azColName){
+   int i;
+   for(i=0; i<argc; i++){
+      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+   }
+   printf("\n");
+   return 0;
 }
 
 void almacenarEnBD(string nombreRSS, list<Noticia*> noticias){
-
+	sqlite3* db;
+	int rc;
+	char *zErrMsg = 0;
+	conectarBD(db,rc);
+	string sql ="";
+	string sql2 ="INSERT INTO RSS (NOMBRE)VALUES ( '"+nombreRSS+"');";
+	//rc = sqlite3_exec(db, sql2, callback, 0, &zErrMsg);
+	//Jon mira si puedes cambiar el string por char*, lo demas creo que esta bien
+	   if( rc != SQLITE_OK ){
+	      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+	      sqlite3_free(zErrMsg);
+	   }else{
+	      fprintf(stdout, "Records created successfully1\n");
+	   }
 	unsigned int i;
 	for(i = 0; i<noticias.size(); i++){
-
+		sql+="INSERT INTO NOTICIA (TITULO,AUTOR,DESCRIPCION)VALUES ( '"+get(noticias,i)->getTitulo()+"', '"+get(noticias,i)->getAutor()+"','"+get(noticias,i)->getDescripcion()+"' );";
 	}
+	//rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+		   if( rc != SQLITE_OK ){
+		      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		      sqlite3_free(zErrMsg);
+		   }else{
+		      fprintf(stdout, "Records created successfully2\n");
+		   }
+	cerrarBD(db);
 }
 
 /*
