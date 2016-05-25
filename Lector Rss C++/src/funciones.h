@@ -26,7 +26,7 @@ Noticia* nuevaNoticia();
 void mostrarNoticia(Noticia* n);
 void crearRss(string nombreRSS, list<Noticia*>* noticias);
 void conectarBD(sqlite3* db, int rc);
-void almacenarEnBD(string nombreRSS, list<Noticia*> noticias);
-Noticia* get(list<Noticia*> _list, int _i);
+void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias);
+Noticia* get(list<Noticia*>* _list, int _i);
 
 #endif /* FUNCIONES_H_ */

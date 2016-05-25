@@ -53,7 +53,7 @@ int main(void) {
 			int i;
 			for(i=0;i<noticias.size();i++)
 			{
-				mostrarNoticia(get(noticias,i));
+				mostrarNoticia(get(&noticias,i));
 			}
 		}
 			break;

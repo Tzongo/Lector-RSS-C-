@@ -39,6 +39,7 @@ void crearRss(string nombreRSS, list<Noticia*>* noticias) {
 		scanf("%c", &fin);
 		fflush(stdin);
 	} while (fin=='s');
+	almacenarEnBD(nombreRSS, noticias);
 
 }
 Noticia* nuevaNoticia() {
@@ -81,10 +82,11 @@ void conectarBD(sqlite3* db, int rc)
 	rc = sqlite3_open("xmlbd.s3db", &db);
 
 	if( rc ){
-	  fprintf(stderr, "Error al abrir BD: %s\n", sqlite3_errmsg(db));
+	  //cambiar stderr por std para mostrar por consola
+	  fprintf(stdout, "Error al abrir BD: %s\n", sqlite3_errmsg(db));
 	  exit(0);
 	}else{
-	  fprintf(stderr, "Base de datos abierta exitosamente\n");
+	  fprintf(stdout, "Base de datos abierta exitosamente\n");
 	}
 }
 void cerrarBD(sqlite3* db)
@@ -101,7 +103,7 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName){
 }
 
 
-void almacenarEnBD(string nombreRSS, list<Noticia*> noticias){
+void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 	sqlite3* db;
 	int rc;
 	char *zErrMsg = 0;
@@ -118,7 +120,7 @@ void almacenarEnBD(string nombreRSS, list<Noticia*> noticias){
 	      fprintf(stdout, "Records created successfully1\n");
 	   }
 	unsigned int i;
-	for(i = 0; i<noticias.size(); i++){
+	for(i = 0; i<noticias->size(); i++){
 		sql+="INSERT INTO NOTICIA (TITULO,AUTOR,DESCRIPCION)VALUES ( '"+get(noticias,i)->getTitulo()+"', '"+get(noticias,i)->getAutor()+"','"+get(noticias,i)->getDescripcion()+"' );";
 	}
 	const char *csql = sql.c_str();
@@ -331,8 +333,8 @@ void almacenarEnBD(string nombreRSS, list<Noticia*> noticias){
  }
  */
 
-Noticia* get(list<Noticia*> _list, int _i){
-    list<Noticia*>::iterator it = _list.begin();
+Noticia* get(list<Noticia*>* _list, int _i){
+    list<Noticia*>::iterator it = _list->begin();
     for(int i=0; i<_i; i++){
         ++it;
     }
