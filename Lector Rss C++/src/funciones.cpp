@@ -99,7 +99,7 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName){
    printf("\n");
    return 0;
 }
-//lalalal
+
 
 void almacenarEnBD(string nombreRSS, list<Noticia*> noticias){
 	sqlite3* db;
@@ -108,8 +108,9 @@ void almacenarEnBD(string nombreRSS, list<Noticia*> noticias){
 	conectarBD(db,rc);
 	string sql ="";
 	string sql2 ="INSERT INTO RSS (NOMBRE)VALUES ( '"+nombreRSS+"');";
-	//rc = sqlite3_exec(db, sql2, callback, 0, &zErrMsg);
-	//Jon mira si puedes cambiar el string por char*, lo demas creo que esta bien
+	const char *csql2 = sql2.c_str();
+	rc = sqlite3_exec(db, csql2, callback, 0, &zErrMsg);
+
 	   if( rc != SQLITE_OK ){
 	      fprintf(stderr, "SQL error: %s\n", zErrMsg);
 	      sqlite3_free(zErrMsg);
@@ -120,7 +121,8 @@ void almacenarEnBD(string nombreRSS, list<Noticia*> noticias){
 	for(i = 0; i<noticias.size(); i++){
 		sql+="INSERT INTO NOTICIA (TITULO,AUTOR,DESCRIPCION)VALUES ( '"+get(noticias,i)->getTitulo()+"', '"+get(noticias,i)->getAutor()+"','"+get(noticias,i)->getDescripcion()+"' );";
 	}
-	//rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+	const char *csql = sql.c_str();
+	rc = sqlite3_exec(db, csql, callback, 0, &zErrMsg);
 		   if( rc != SQLITE_OK ){
 		      fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		      sqlite3_free(zErrMsg);
