@@ -10,7 +10,7 @@
 #include "funciones.h"
 #include <stdbool.h>
 #include <list>
-#include <sqlite3.h>
+#include "sqlite3.h"
 using namespace std;
 
 int main(void) {
@@ -18,11 +18,11 @@ int main(void) {
 	bool repetir;
 	Noticia* n;
 
-
 	sqlite3 *db;
 	char *zErrMsg = 0;
 	int rc;
 	conectarBD(db, rc);
+
 	do {
 		repetir = true;
 		funcMenu = mostrarMenu();
@@ -78,7 +78,7 @@ int main(void) {
 			repetir = false;
 			break;
 		default:
-			printf("\n¡Opcion incorrecta!\n\n");
+			printf("\nï¿½Opcion incorrecta!\n\n");
 			break;
 		}
 	} while (repetir);
