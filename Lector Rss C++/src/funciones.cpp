@@ -82,7 +82,7 @@ void conectarBD(sqlite3* db, int rc)
 	rc = sqlite3_open("xmlbd.s3db", &db);
 
 	if( rc ){
-	  //cambiar stderr por std para mostrar por consola
+	  //cambiar stderr por stdout para mostrar por consola
 	  fprintf(stdout, "Error al abrir BD: %s\n", sqlite3_errmsg(db));
 	  exit(0);
 	}else{
