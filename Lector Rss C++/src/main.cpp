@@ -38,6 +38,11 @@ int main(void) {
 			printf("\n");
 			break;
 		case '2':
+			char*  statement;
+			statement = "SELECT * from XML";
+			printf("\nLista de XML : \n");
+			// No encuentro donde esta ahora la bd :/
+			ejecutarComandoBD(statement);
 			break;
 		case '3':
 		{
@@ -45,10 +50,11 @@ int main(void) {
 			string tituloRSS;
 			printf("Introduce titulo del RSS: \n");
 			fflush(stdout);
-			scanf("%s", tituloRSS.c_str());
-			fflush(stdin);
 
-			crearRss(&tituloRSS, &noticias);
+			getline(cin, tituloRSS);
+			/*scanf("%s", tituloRSS.c_str());
+			fflush(stdin);*/
+			crearRss(tituloRSS, &noticias);
 			//mostrarNoticia(nuevaNoticia());
 			int i;
 			for(i=0;i<noticias.size();i++)
