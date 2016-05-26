@@ -18,10 +18,10 @@ int main(void) {
 	bool repetir;
 	Noticia* n;
 
-	sqlite3 *db;
-	char *zErrMsg = 0;
-	int rc;
-	conectarBD(db, rc);
+//	sqlite3 *db;
+//	char *zErrMsg = 0;
+//	int rc;
+//	conectarBD(db, rc);
 
 	do {
 		repetir = true;

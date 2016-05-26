@@ -88,6 +88,7 @@ void conectarBD(sqlite3* db, int rc)
 	}else{
 	  fprintf(stdout, "Base de datos abierta exitosamente\n");
 	}
+	//lalal
 }
 void cerrarBD(sqlite3* db)
 {
@@ -107,14 +108,25 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 	sqlite3* db;
 	int rc;
 	char *zErrMsg = 0;
-	conectarBD(db,rc);
+	//conectarBD(db,rc);
+
+	rc = sqlite3_open("xmlbd.S3db", &db);
+	   if( rc ){
+	      fprintf(stdout, "Can't open database: %s\n", sqlite3_errmsg(db));
+	      exit(0);
+	   }else{
+	      fprintf(stdout, "Opened database successfully\n");
+	   }
+
 	string sql ="";
 	string sql2 ="INSERT INTO RSS (NOMBRE)VALUES ( '"+nombreRSS+"');";
-	const char *csql2 = sql2.c_str();
+	char *csql2 = new char[sql2.length() + 1];
+	strcpy(csql2, sql2.c_str());
+	delete [] csql2;
 	rc = sqlite3_exec(db, csql2, callback, 0, &zErrMsg);
 
 	   if( rc != SQLITE_OK ){
-	      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+	      fprintf(stdout, "SQL error: %s\n", zErrMsg);
 	      sqlite3_free(zErrMsg);
 	   }else{
 	      fprintf(stdout, "Records created successfully1\n");
