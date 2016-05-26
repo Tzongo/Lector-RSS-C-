@@ -14,6 +14,7 @@
 #include "Noticia.h"
 #include <list>
 #include "sqlite3.h"
+#include <iostream>
 using namespace std;
 char mostrarMenu() {
 	printf("MENU PRINCIPAL\n"
@@ -29,7 +30,7 @@ char mostrarMenu() {
 	fflush(stdin);
 	return resultado;
 }
-void crearRss(string nombreRSS, list<Noticia*>* noticias) {
+void crearRss(string *nombreRSS, list<Noticia*>* noticias) {
 
 	char fin = 'n';
 	do {
@@ -104,7 +105,7 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName){
 }
 
 
-void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
+void almacenarEnBD(string *nombreRSS, list<Noticia*>* noticias){
 	sqlite3* db;
 	int rc;
 	char *zErrMsg = 0;
@@ -119,7 +120,15 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 	   }
 
 	string sql ="";
-	string sql2 ="INSERT INTO RSS (NOMBRE)VALUES ( '"+nombreRSS+"');";
+
+	//const char *cnombreRSS = nombreRSS.c_str();
+	string tituloRSS = *nombreRSS;
+	cout << tituloRSS << endl;
+	//string sql2 ="INSERT INTO RSS (NOM_XML, RUTA)VALUES ( '" + tituloRSS + "', 'Lector Rss C++/src/" + tituloRSS + ".xm');";
+	string sql2 ="INSERT INTO RSS (NOM_XML, RUTA)VALUES ( '";
+	sql2 = sql2 + tituloRSS;
+	cout << sql2 << endl;
+
 	char *csql2 = new char[sql2.length() + 1];
 	strcpy(csql2, sql2.c_str());
 	delete [] csql2;
@@ -143,7 +152,8 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 		   }else{
 		      fprintf(stdout, "Records created successfully2\n");
 		   }
-	cerrarBD(db);
+	//cerrarBD(db);
+	sqlite3_close(db);
 }
 
 /*

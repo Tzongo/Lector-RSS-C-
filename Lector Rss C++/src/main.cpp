@@ -48,7 +48,7 @@ int main(void) {
 			scanf("%s", tituloRSS.c_str());
 			fflush(stdin);
 
-			crearRss(tituloRSS, &noticias);
+			crearRss(&tituloRSS, &noticias);
 			//mostrarNoticia(nuevaNoticia());
 			int i;
 			for(i=0;i<noticias.size();i++)
