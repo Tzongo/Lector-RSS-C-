@@ -47,12 +47,11 @@ int main(void) {
 			}
 			break;
 		case '2':{
-			//string  statement;
 
 			bool continuar;
 			continuar = true;
 			char respuesta;
-			char* modificacion;
+			string modificacion;
 			bool repetir2;
 			repetir2 = true;
 			do
@@ -79,66 +78,64 @@ int main(void) {
 			result = convert.str();
 			statement.append(result);
 			statement.append(";");
-			printf(statement);
-			//ejecutarComandoBD(&statement[0u]);
-			printf( "\n¿Es esta la noticia que quieres modificar? (s/n) ");
-			fflush(stdout);
-			scanf("%c",respuesta);
+			cout << statement;
+			csql2 = statement.c_str();
+			csql3=(char*) csql2;
+			getTableDataNoticia(csql3);
+
+			cout << "\n¿Es esta la noticia que quieres modificar? (s/n) ";
+			cin >> respuesta;
 			if (respuesta = 's') continuar = false;
 
 			} while(continuar);
 			do
 			{
-			printf( "\n¿Que desea modificar?  ");
-			printf("\n"
+				cout <<"\n¿Que desea modificar?  ";
+				cout <<"\n"
 					"1.\tTitulo\n"
 					"2.\tAutor\n"
 					"3.\tDescripcion\n"
 					"4.\tSalir\n\n"
-					"Introduzca numero de la funcion deseada:\n");
-			fflush(stdout);
+					"Introduzca numero de la funcion deseada:\n";
+
 			char resultado;
-			scanf("%i",respuesta);
+			cin >> respuesta;
 			switch(respuesta)
 			{
 			case '1':
-				printf( "\nIntroduzca el nuevo titulo : ");
-				fflush(stdout);
-				scanf("%c",modificacion);
+				cout << "\nIntroduzca el nuevo titulo : ";
+
+				cin >> modificacion;
 				statement = "UPDATE NOTICIA SET TITULO = '";
 				statement.append(modificacion);
-				statement.append("' WHERE ID = ");
+				statement.append("' WHERE COD_NOT = ");
 				statement.append(result);
 				statement.append(";");
 				ejecutarComandoBD(&statement[0u]);
-				printf( "\nEl titulo ha sido modificado ");
-				fflush(stdout);
+				cout << "\nEl titulo ha sido modificado ";
+
 				break;
 			case '2':
-				printf( "\nIntroduzca el nuevo autor : ");
-				fflush(stdout);
-				scanf("%c",modificacion);
+				cout << "\nIntroduzca el nuevo autor : ";
+				cin >> modificacion;
 				statement = "UPDATE NOTICIA SET AUTOR = '";
 				statement.append(modificacion);
-				statement.append("' WHERE ID = ");
+				statement.append("' WHERE COD_NOT  = ");
 				statement.append(result);
 				statement.append(";");
 				ejecutarComandoBD(&statement[0u]);
-				printf( "\nEl autor  ha sido modificado ");
-				fflush(stdout);
+				cout << "\nEl autor  ha sido modificado ";
 				break;
 			case '3':
-					printf( "\nIntroduzca la nueva descripcion : ");
-					fflush(stdout);
-					scanf("%c",modificacion);
+				cout << "\nIntroduzca la nueva descripcion : ";
+					cin >> modificacion;
 					statement =	"UPDATE NOTICIA SET DESC = '";
 					statement.append(modificacion);
-					statement.append("' WHERE ID = ");
+					statement.append("' WHERE COD_NOT  = ");
 					statement.append(result);
 					statement.append(";");
 					ejecutarComandoBD(&statement[0u]);
-					printf( "\nLa descripcion ha sido modificada ");
-					fflush(stdout);
+					cout << "\nLa descripcion ha sido modificada ";
 					break;
 			case '4':
 				repetir2 = false;

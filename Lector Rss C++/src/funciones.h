@@ -35,4 +35,5 @@ int callback(void *NotUsed, int argc, char **argv, char **azColName);
 int callback2(void *NotUsed, int argc, char **argv, char **azColName,list<Noticia*>* noticias);
 list<Noticia*>* getTableData(char* query, list<Noticia*>* noticias);
 int getTableData(char* query);
+Noticia* getTableDataNoticia(char* query);
 #endif /* FUNCIONES_H_ */

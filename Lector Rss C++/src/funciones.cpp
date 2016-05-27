@@ -113,10 +113,11 @@ int callback(void *NotUsed, int argc, char **argv, char **azColName) {
 	return 0;
 }
 
-list<Noticia*>* getTableData(char* query, list<Noticia*>* noticias) {
+Noticia* getTableDataNoticia(char* query) {
 	sqlite3_stmt *statement;
 	sqlite3* db;
 	int rc;
+	Noticia* n = new Noticia();
 	rc = sqlite3_open("xmlbd.s3db", &db);
 
 	if (rc) {
@@ -133,8 +134,7 @@ list<Noticia*>* getTableData(char* query, list<Noticia*>* noticias) {
 
 		while (1) {
 			res = sqlite3_step(statement);
-			Noticia* n;
-			n = new Noticia();
+
 			if (res == SQLITE_ROW) {
 
 				for (int i = 0; i < ctotal; i++) {
@@ -149,13 +149,18 @@ list<Noticia*>* getTableData(char* query, list<Noticia*>* noticias) {
 					case 1:
 						n->setTitulo(s);
 						break;
+					case 2:
+						n->setAutor(s.c_str());
+						break;
+					case 3:
+						n->setDescripcion(s);
+						break;
 					default:
 						break;
 					}
 				}
 			}
-			mostrarNoticia(n);
-			//noticias->push_back(n);
+
 
 			if (res == SQLITE_DONE || res == SQLITE_ERROR) {
 				cout << "done " << endl;
@@ -164,7 +169,8 @@ list<Noticia*>* getTableData(char* query, list<Noticia*>* noticias) {
 		}
 
 	}
-	return noticias;
+	mostrarNoticia(n);
+	return n;
 }
 
 int getTableDataID(char* query) {
@@ -231,8 +237,6 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias) {
 		fprintf(stdout, "Base de datos abierta exitosamente\n");
 	}
 
-	printf("Titulo de la noticia: %s\n", nombreRSS.c_str());
-	fflush(stdout);
 
 	string sql = "";
 	string sql2 = "INSERT INTO XML (NOM_XML, RUTA)VALUES ('" + nombreRSS
@@ -320,85 +324,85 @@ int ejecutarComandoBD(char * statement) {
 
 }
 /*void exportarXML() {
-	sqlite3 *db;
-	char *zErrMsg = 0;
-	int rc, rc1;
-	char *sql;
-	string sqla;
-	string sqld;
-	string sqlt;
+ sqlite3 *db;
+ char *zErrMsg = 0;
+ int rc, rc1;
+ char *sql;
+ string sqla;
+ string sqld;
+ string sqlt;
 
-	const char* data = "Callback function called";
-	// Open database
-	//rc = sqlite3_open("xmlbd.s3db", &db);
+ const char* data = "Callback function called";
+ // Open database
+ //rc = sqlite3_open("xmlbd.s3db", &db);
 
-	rc = sqlite3_open("xmlbd.s3db", &db);
+ rc = sqlite3_open("xmlbd.s3db", &db);
 
-	if (rc) {
-		//cambiar stderr por stdout para mostrar por consola
-		fprintf(stdout, "Error al abrir BD: %s\n", sqlite3_errmsg(db));
-		exit(0);
-	} else {
-		fprintf(stdout, "Base de datos abierta exitosamente\n");
-	}
-	int (*callback)(void*, int, char**, char**);
-	// Create SQL statement
-	int i, var;
-	rc1 = sqlite3_exec(db, "select count(*) from NOTICIA", callback,
-			(void*) data, &zErrMsg);
+ if (rc) {
+ //cambiar stderr por stdout para mostrar por consola
+ fprintf(stdout, "Error al abrir BD: %s\n", sqlite3_errmsg(db));
+ exit(0);
+ } else {
+ fprintf(stdout, "Base de datos abierta exitosamente\n");
+ }
+ int (*callback)(void*, int, char**, char**);
+ // Create SQL statement
+ int i, var;
+ rc1 = sqlite3_exec(db, "select count(*) from NOTICIA", callback,
+ (void*) data, &zErrMsg);
 
-	for (i = 0; i < rc1; i++) {
-		string nom = "RSS ";
-		nom.append(i + ".xml");
-		const char *cnom = sqld.c_str();
-		doc = fopen(cnom, "a+");
+ for (i = 0; i < rc1; i++) {
+ string nom = "RSS ";
+ nom.append(i + ".xml");
+ const char *cnom = sqld.c_str();
+ doc = fopen(cnom, "a+");
 
-		for (var = 0; var < rc1; ++var) {
-			string result;
+ for (var = 0; var < rc1; ++var) {
+ string result;
 
-			ostringstream convert;
+ ostringstream convert;
 
-			convert << i;
+ convert << i;
 
-			result = convert.str();
-			string result2;
+ result = convert.str();
+ string result2;
 
 
-			convert << var;
+ convert << var;
 
-			result = convert.str();
-			sqla = "select AUTOR from NOTICIA  where COD_XML = " + result
-					+ " and COD_NOT = " + result2;
-			sqlt = "select TITULO from NOTICIA  where COD_XML = " + result
-					+ " and COD_NOT=" + result2;
-			sqld = "select DESCRIPCION from NOTICIA  where COD_XML = " + result
-					+ " and COD_NOT=" + result2;
+ result = convert.str();
+ sqla = "select AUTOR from NOTICIA  where COD_XML = " + result
+ + " and COD_NOT = " + result2;
+ sqlt = "select TITULO from NOTICIA  where COD_XML = " + result
+ + " and COD_NOT=" + result2;
+ sqld = "select DESCRIPCION from NOTICIA  where COD_XML = " + result
+ + " and COD_NOT=" + result2;
 
-			const char *csqld = sqld.c_str();
-			const char *csqlt = sqlt.c_str();
-			const char *csqla = sqla.c_str();
-			int (*callback)(void*, int, char**, char**);
+ const char *csqld = sqld.c_str();
+ const char *csqlt = sqlt.c_str();
+ const char *csqla = sqla.c_str();
+ int (*callback)(void*, int, char**, char**);
 
-			fprintf(doc, "<channel><title>");
-			fprintf(doc, "%i",
-					sqlite3_exec(db, csqlt, callback, (void*) data, &zErrMsg));
-			fprintf(doc, "</title>\t");
-			fprintf(doc, "<description><![CDATA[");
-			fprintf(doc, "%i",
-					sqlite3_exec(db, csqlt, callback, (void*) data, &zErrMsg));
-			fprintf(doc, "]]</description>\t");
-			fprintf(doc, "<author>");
-			fprintf(doc, "%i",
-					sqlite3_exec(db, csqla, callback, (void*) data, &zErrMsg));
-			fprintf(doc, "</author>\t");
+ fprintf(doc, "<channel><title>");
+ fprintf(doc, "%i",
+ sqlite3_exec(db, csqlt, callback, (void*) data, &zErrMsg));
+ fprintf(doc, "</title>\t");
+ fprintf(doc, "<description><![CDATA[");
+ fprintf(doc, "%i",
+ sqlite3_exec(db, csqlt, callback, (void*) data, &zErrMsg));
+ fprintf(doc, "]]</description>\t");
+ fprintf(doc, "<author>");
+ fprintf(doc, "%i",
+ sqlite3_exec(db, csqla, callback, (void*) data, &zErrMsg));
+ fprintf(doc, "</author>\t");
 
-		}
-	}
-	if (rc != SQLITE_OK) {
-		fprintf(stdout, "SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-	} else {
-		fprintf(stdout, "Operation done successfully\n");
-	}
-	sqlite3_close(db);
-}*/
+ }
+ }
+ if (rc != SQLITE_OK) {
+ fprintf(stdout, "SQL error: %s\n", zErrMsg);
+ sqlite3_free(zErrMsg);
+ } else {
+ fprintf(stdout, "Operation done successfully\n");
+ }
+ sqlite3_close(db);
+ }*/
