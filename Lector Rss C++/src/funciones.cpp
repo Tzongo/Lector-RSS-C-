@@ -108,16 +108,20 @@ void cerrarBD(sqlite3* db)
 {
 	sqlite3_close(db);
 }
-static int callback(void *NotUsed, int argc, char **argv, char **azColName){
-   int i;
-   for(i=0; i<argc; i++){
-      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-      fflush(stdout);
-   }
-   printf("\n");
-   return 0;
-}
+int callback(void *NotUsed, int argc, char **argv,
+                    char **azColName) {
 
+    NotUsed = 0;
+
+    for (int i = 0; i < argc; i++) {
+
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+
+    printf("\n");
+
+    return 0;
+}
 
 void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 	sqlite3* db;
@@ -377,43 +381,6 @@ Noticia* get(list<Noticia*>* _list, int _i){
     }
     return *it;
 }
- void getTableData(char * statement)
- {
-	 printf(statement);
-     sqlite3_stmt *statement2;
-     sqlite3* db;
-     int rc;
-     conectarBD(db,rc);
-     char *query = statement;
-
-     if ( sqlite3_prepare(db, query, -1, &statement2, 0 ) == SQLITE_OK )
-     {
-         int ctotal = sqlite3_column_count(statement2);
-         int res = 0;
-
-         while ( 1 )
-         {
-             res = sqlite3_step(statement2);
-
-             if ( res == SQLITE_ROW )
-             {
-                 for ( int i = 0; i < ctotal; i++ )
-                 {
-                     string s = (char*)sqlite3_column_text(statement2, i);
-                     // print or format the output as you want
-                     cout << s << " " ;
-                 }
-                 cout << endl;
-             }
-
-             if ( res == SQLITE_DONE || res==SQLITE_ERROR)
-             {
-                 cout << "done " << endl;
-                 break;
-             }
-         }
-     }
- }
  int ejecutarComandoBD( char * statement)
  {
 	 int devolver;
@@ -425,6 +392,7 @@ Noticia* get(list<Noticia*>* _list, int _i){
  	rc = sqlite3_exec(db, statement, callback, (void*)data, &zErrMsg);
  	   if( rc != SQLITE_OK ){
  	      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+ 	      fflush(stdout);
  	      sqlite3_free(zErrMsg);
  	      devolver = 1;
  	   }else{
