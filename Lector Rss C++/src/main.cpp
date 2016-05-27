@@ -51,9 +51,11 @@ int main(void) {
 			printf("Introduce titulo del RSS: \n");
 			fflush(stdout);
 
-			getline(cin, tituloRSS);
+//			getline(cin, tituloRSS);
 			/*scanf("%s", tituloRSS.c_str());
 			fflush(stdin);*/
+			cin >> tituloRSS;
+			cout << endl;
 			crearRss(tituloRSS, &noticias);
 			//mostrarNoticia(nuevaNoticia());
 			int i;

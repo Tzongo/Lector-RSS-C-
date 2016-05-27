@@ -24,9 +24,10 @@ int abrirRss(char* nombre);
 Info infoRss(char* nombre);
 Noticia* nuevaNoticia();
 void mostrarNoticia(Noticia* n);
-void crearRss(string *nombreRSS, list<Noticia*>* noticias);
+void crearRss(string nombreRSS, list<Noticia*>* noticias);
 void conectarBD(sqlite3* db, int rc);
-void almacenarEnBD(string *nombreRSS, list<Noticia*>* noticias);
+void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias);
 Noticia* get(list<Noticia*>* _list, int _i);
+int ejecutarComandoBD( char * statement);
 
 #endif /* FUNCIONES_H_ */

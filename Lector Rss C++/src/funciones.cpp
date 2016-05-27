@@ -8,6 +8,7 @@
 #include "funciones.h"
 #include <stdio.h>
 #include <string.h>
+#include <string>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -128,12 +129,10 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 	   }
 
 	string sql ="";
-	string sql2 ="INSERT INTO RSS (NOMBRE)VALUES ( '";
-	sql2.append(nombreRSS.c_str());
-	sql2.append("');");
-	char *csql2 = new char[sql2.length() + 1];
-	strcpy(csql2, sql2.c_str());
-	delete [] csql2;
+	string sql2 ="INSERT INTO XML (NOM_XML, RUTA)VALUES ('" + nombreRSS + "', 'Lector Rss C++/src/"+nombreRSS+".xml');";
+//	sql2.append(nombreRSS.c_str());
+//	sql2.append("');");
+	const char *csql2 = sql2.c_str();
 	rc = sqlite3_exec(db, csql2, callback, 0, &zErrMsg);
 
 	   if( rc != SQLITE_OK ){
@@ -372,6 +371,7 @@ Noticia* get(list<Noticia*>* _list, int _i){
 
  int ejecutarComandoBD( char * statement)
  {
+	 int devolver;
 	 sqlite3* db;
 	 int rc;
 	 conectarBD(db,rc);
@@ -382,11 +382,13 @@ Noticia* get(list<Noticia*>* _list, int _i){
  	   if( rc != SQLITE_OK ){
  	      fprintf(stderr, "SQL error: %s\n", zErrMsg);
  	      sqlite3_free(zErrMsg);
- 	      return 1;
+ 	      devolver = 1;
  	   }else{
  	      fprintf(stdout, "Operation done successfully\n");
- 	      return 0;
+ 	      devolver = 0;
 
- }
+ 	   }
  	   cerrarBD(db);
+ 	   return devolver;
+
 }
