@@ -18,24 +18,31 @@ int main(void) {
 	bool repetir;
 	Noticia* n;
 	string  statement;
-//	sqlite3 *db;
-//	char *zErrMsg = 0;
-//	int rc;
-//	conectarBD(db, rc);
 
 	do {
 		repetir = true;
 		funcMenu = mostrarMenu();
 		switch (funcMenu) {
 		case '1':
-			printf("Introduce nombre (con extension) del archivo: \n");
+		{
+			statement = "SELECT * from XML;";
+			const char *csql2 = statement.c_str();
+			char *csql3=(char*) csql2;
+			ejecutarComandoBD(csql3);
+			printf("Introduce COD_XML del archivo: \n");
 			fflush(stdout);
 			char nombre[20];
 			scanf("%s", nombre);
 			fflush(stdin);
 			printf("%s", nombre);
-			//abrirRss(nombre);
+			statement = "SELECT * from NOTICIA where cod_xml like '";
+			statement.append(nombre);
+			statement.append("';");
+			csql2 = statement.c_str();
+			csql3=(char*) csql2;
+			ejecutarComandoBD(csql3);
 			printf("\n");
+			}
 			break;
 		case '2':{
 			//string  statement;

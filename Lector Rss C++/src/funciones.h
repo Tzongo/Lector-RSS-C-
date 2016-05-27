@@ -17,11 +17,7 @@ typedef struct
 	char* items;
 	char* fuentes;
 }Info;
-typedef struct
-{
-	Noticia* noticia;
-	int rc;
-}callbackArray;
+
 char mostrarMenu();
 char* substring();
 int _find();

@@ -233,8 +233,6 @@ int ejecutarComandoBD(char * statement) {
 	int devolver;
 	int rc;
 
-	//conectarBD();
-
 	sqlite3* db;
 	rc = sqlite3_open("xmlbd.s3db", &db);
 
@@ -248,8 +246,6 @@ int ejecutarComandoBD(char * statement) {
 
 	char *zErrMsg = 0;
 	const char* data = "Callback function called";
-	list<Noticia*>* noticias;
-	callbackArray a;
 	rc = sqlite3_exec(db, statement, callback, (void*) data, &zErrMsg);
 	if (rc != SQLITE_OK) {
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
