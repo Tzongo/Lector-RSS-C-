@@ -91,8 +91,10 @@ void mostrarNoticia(Noticia* n) {
 	fflush(stdout);
 }
 
-void conectarBD(sqlite3* db, int rc)
+sqlite3* conectarBD()
 {
+	int rc;
+	sqlite3* db;
 	rc = sqlite3_open("xmlbd.s3db", &db);
 
 	if( rc ){
@@ -102,7 +104,7 @@ void conectarBD(sqlite3* db, int rc)
 	}else{
 	  fprintf(stdout, "Base de datos abierta exitosamente\n");
 	}
-	//lalal
+	return db;
 }
 void cerrarBD(sqlite3* db)
 {
@@ -127,21 +129,23 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 	sqlite3* db;
 	int rc;
 	char *zErrMsg = 0;
-	//conectarBD(db,rc);
+	//conectarBD();
+
+		rc = sqlite3_open("xmlbd.s3db", &db);
+
+		if( rc ){
+		  //cambiar stderr por stdout para mostrar por consola
+		  fprintf(stdout, "Error al abrir BD: %s\n", sqlite3_errmsg(db));
+		  exit(0);
+		}else{
+		  fprintf(stdout, "Base de datos abierta exitosamente\n");
+		}
+
 	printf("Titulo de la noticia: %s\n", nombreRSS.c_str());
 	fflush(stdout);
-	rc = sqlite3_open("xmlbd.S3db", &db);
-	   if( rc ){
-	      fprintf(stdout, "Can't open database: %s\n", sqlite3_errmsg(db));
-	      exit(0);
-	   }else{
-	      fprintf(stdout, "Opened database successfully\n");
-	   }
 
 	string sql ="";
 	string sql2 ="INSERT INTO XML (NOM_XML, RUTA)VALUES ('" + nombreRSS + "', 'Lector Rss C++/src/"+nombreRSS+".xml');";
-//	sql2.append(nombreRSS.c_str());
-//	sql2.append("');");
 
 	const char *csql2 = sql2.c_str();
 	rc = sqlite3_exec(db, csql2, callback, 0, &zErrMsg);
@@ -153,7 +157,7 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 	      fprintf(stdout, "Records created successfully1\n");
 	   }
 
-	   ejecutarComandoBD(&("SELECT COD_XML FROM XML WHERE NOM_XML LIKE '"+nombreRSS+"';")[0u]);
+	   ejecutarComandoBD((char*)("SELECT COD_XML FROM XML WHERE NOM_XML LIKE '"+nombreRSS+"';").c_str());
 	unsigned int i;
 	for(i = 0; i<noticias->size(); i++){
 		sql.append("INSERT INTO NOTICIA (TITULO,AUTOR,DESC)VALUES ( '");
@@ -384,12 +388,25 @@ Noticia* get(list<Noticia*>* _list, int _i){
  int ejecutarComandoBD( char * statement)
  {
 	 int devolver;
-	 sqlite3* db;
 	 int rc;
-	 conectarBD(db,rc);
+
+	 //conectarBD();
+
+	 	sqlite3* db;
+	 	rc = sqlite3_open("xmlbd.s3db", &db);
+
+	 	if( rc ){
+	 	  //cambiar stderr por stdout para mostrar por consola
+	 	  fprintf(stdout, "Error al abrir BD: %s\n", sqlite3_errmsg(db));
+	 	  exit(0);
+	 	}else{
+	 	  fprintf(stdout, "Base de datos abierta exitosamente\n");
+	 	}
+
+
  	 char *zErrMsg = 0;
  		   const char* data = "Callback function called";
- 	rc = sqlite3_exec(db, statement, callback, (void*)data, &zErrMsg);
+ 	rc = sqlite3_exec(db, statement, callback, (void*) data, &zErrMsg);
  	   if( rc != SQLITE_OK ){
  	      fprintf(stderr, "SQL error: %s\n", zErrMsg);
  	      fflush(stdout);
