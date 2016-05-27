@@ -71,7 +71,7 @@ int main(void) {
 			//ejecutarComandoBD(&statement[0u]);
 			printf( "\n¿Es esta la noticia que quieres modificar? (s/n) ");
 			fflush(stdout);
-			scanf("%i",respuesta);
+			scanf("%c",respuesta);
 			if (respuesta = 's') continuar = false;
 
 			} while(continuar);

@@ -165,6 +165,54 @@ list<Noticia*>* getTableData(char* query,list<Noticia*>* noticias) {
 	return noticias;
 }
 
+int getTableDataID(char* query) {
+	int a;
+	sqlite3_stmt *statement;
+	sqlite3* db;
+	int rc;
+	rc = sqlite3_open("xmlbd.s3db", &db);
+
+	if (rc) {
+		//cambiar stderr por stdout para mostrar por consola
+		fprintf(stdout, "Error al abrir BD: %s\n", sqlite3_errmsg(db));
+		exit(0);
+	} else {
+		fprintf(stdout, "Base de datos abierta exitosamente\n");
+	}
+
+	if (sqlite3_prepare(db, query, -1, &statement, 0) == SQLITE_OK) {
+		int ctotal = sqlite3_column_count(statement);
+		int res = 0;
+
+		while (1) {
+			res = sqlite3_step(statement);
+			if (res == SQLITE_ROW) {
+
+				for (int i = 0; i < ctotal; i++) {
+
+					string s = (char*) sqlite3_column_text(statement, i);
+					// print or format the output as you want
+
+					switch (i) {
+					case 0:
+						a=atoi(s.c_str());
+						break;
+					default:
+						break;
+					}
+				}
+			}
+
+			if (res == SQLITE_DONE || res == SQLITE_ERROR) {
+				cout << "done " << endl;
+				break;
+			}
+		}
+
+	}
+	return a;
+}
+
 void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias) {
 	sqlite3* db;
 	int rc;
