@@ -249,7 +249,7 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias) {
 		fprintf(stdout, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	} else {
-		fprintf(stdout, "Records created successfully1\n");
+		fprintf(stdout, "XML creado\n");
 	}
 	int a;
 	a = getTableDataID(
@@ -279,7 +279,7 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias) {
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	} else {
-		fprintf(stdout, "Records created successfully2\n");
+		fprintf(stdout, "Noticias insertadas\n");
 	}
 	cerrarBD(db);
 }
@@ -315,7 +315,7 @@ int ejecutarComandoBD(char * statement) {
 		sqlite3_free(zErrMsg);
 		devolver = 1;
 	} else {
-		fprintf(stdout, "Operation done successfully\n");
+		fprintf(stdout, "Operacion correcta\n");
 		devolver = 0;
 
 	}
