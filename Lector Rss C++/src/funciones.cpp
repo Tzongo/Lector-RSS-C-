@@ -39,8 +39,10 @@ void crearRss(string nombreRSS, list<Noticia*>* noticias) {
 		noticias->push_back(nuevaNoticia());
 		printf("Quieres introudcir mas noticias? s/n \n");
 		fflush(stdout);
-		scanf("%c", &fin);
-		fflush(stdin);
+		cin >> fin;
+		cout << endl;
+		/*scanf("%c", &fin);
+		fflush(stdin);*/
 	} while (fin=='s');
 	almacenarEnBD(nombreRSS, noticias);
 
@@ -51,8 +53,9 @@ Noticia* nuevaNoticia() {
 	printf("Introduce titulo de la noticia: \n");
 	fflush(stdout);
 	string titulo;
-
-	getline(cin, titulo);
+	cin >> titulo;
+	cout << endl;
+	//getline(cin, titulo);
 	/*scanf("%s", titulo.c_str());
 	fflush(stdin);*/
 	n->setTitulo(titulo);
@@ -60,8 +63,9 @@ Noticia* nuevaNoticia() {
 	printf("Introduce autor de la noticia: \n");
 	fflush(stdout);
 	string autor;
-
-	getline(cin, autor);
+	cin >> autor;
+	cout << endl;
+	//getline(cin, autor);
 	/*scanf("%s", autor.c_str());
 	fflush(stdin);*/
 	n->setAutor(autor);
@@ -69,8 +73,9 @@ Noticia* nuevaNoticia() {
 	printf("Introduce descripcion de la noticia: \n");
 	fflush(stdout);
 	string desc;
-
-	getline(cin, desc);
+	cin >> desc;
+	cout << endl;
+	//getline(cin, desc);
 	/*scanf("%s", desc.c_str());
 	fflush(stdin);*/
 	n->setDescripcion(desc);
@@ -392,3 +397,57 @@ Noticia* get(list<Noticia*>* _list, int _i){
  	   return devolver;
 
 }
+ void exportarXML(){
+ 	sqlite3 *db;
+ 	char *zErrMsg = 0;
+ 	int rc,rc1;
+ 	char *sql;
+ 	string sqla;
+ 	string sqld;
+ 	string sqlt;
+
+ 	const char* data = "Callback function called";
+ 	/* Open database */
+ 	//rc = sqlite3_open("xmlbd.s3db", &db);
+
+ 	conectarBD(db,0);
+ 	int (*callback)(void*, int, char**, char**);
+ 	/* Create SQL statement */
+ 	int i,var;
+ 	rc1 = sqlite3_exec(db, "select count(*) from NOTICIA", callback, (void*)data, &zErrMsg);
+ 	for(i = 0; i<rc1; i++){
+ 		string nom = "RSS ";
+ 		nom.append(i+".xml");
+ 		const char *cnom = sqld.c_str();
+ 		doc = fopen(cnom,"a+");
+ 		for (var = 0; var < rc1; ++var) {
+
+ 			sqla = "select AUTOR from NOTICIA  where COD_XML = %i and COD_NOT=%i",i,var;
+ 			sqlt = "select TITULO from NOTICIA  where COD_XML = %i and COD_NOT=%i",i,var;
+ 			sqld = "select DESCRIPCION from NOTICIA  where COD_XML = %i and COD_NOT=%i",i,var;
+
+ 			const char *csqld = sqld.c_str();
+ 			const char *csqlt = sqlt.c_str();
+ 			const char *csqla = sqla.c_str();
+ 			int (*callback)(void*, int, char**, char**);
+
+ 			fprintf(doc,"<channel><title>");
+ 			fprintf(doc,"%i",sqlite3_exec(db, csqlt, callback, (void*)data, &zErrMsg));
+ 			fprintf(doc,"</title>\t");
+ 			fprintf(doc,"<description><![CDATA[");
+ 			fprintf(doc,"%i",sqlite3_exec(db, csqlt, callback, (void*)data, &zErrMsg));
+ 			fprintf(doc,"]]</description>\t");
+ 			fprintf(doc,"<author>");
+ 			fprintf(doc,"%i",sqlite3_exec(db, csqla, callback, (void*)data, &zErrMsg));
+ 			fprintf(doc,"</author>\t");
+
+ 		}
+ 	}
+ 	if( rc != SQLITE_OK ){
+ 		fprintf(stdout, "SQL error: %s\n", zErrMsg);
+ 		sqlite3_free(zErrMsg);
+ 	}else{
+ 		fprintf(stdout, "Operation done successfully\n");
+ 	}
+ 	sqlite3_close(db);
+ }

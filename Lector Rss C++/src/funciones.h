@@ -29,5 +29,6 @@ void conectarBD(sqlite3* db, int rc);
 void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias);
 Noticia* get(list<Noticia*>* _list, int _i);
 int ejecutarComandoBD( char * statement);
+void exportarXML();
 
 #endif /* FUNCIONES_H_ */

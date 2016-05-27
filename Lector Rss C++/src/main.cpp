@@ -17,7 +17,7 @@ int main(void) {
 	char funcMenu;
 	bool repetir;
 	Noticia* n;
-
+	string  statement;
 //	sqlite3 *db;
 //	char *zErrMsg = 0;
 //	int rc;
@@ -37,8 +37,8 @@ int main(void) {
 			//abrirRss(nombre);
 			printf("\n");
 			break;
-		case '2':
-			char*  statement;
+		case '2':{
+			//string  statement;
 			char* noticia;
 			bool continuar;
 			continuar = true;
@@ -49,17 +49,19 @@ int main(void) {
 			do
 			{
 			statement = "SELECT COD_NOT,TITULO from NOTICIA";
-			ejecutarComandoBD(statement);
+			ejecutarComandoBD(&statement[0u]);
 			printf("\nIntroduzca el codigo de la noticia que desea modificar");
 			fflush(stdout);
 			scanf("%c",noticia);
 			printf( "\n ");
-			statement = "SELECT * from NOTICIA where COD_NOT = " + noticia + ";";
-			ejecutarComandoBD(statement);
+			statement = "SELECT * from NOTICIA where COD_NOT =  ";
+			statement.append(noticia);
+			statement.append(";");
+			ejecutarComandoBD(&statement[0u]);
 			printf( "\n¿Es esta la noticia que quieres modificar? (s/n) ");
 			fflush(stdout);
 			scanf("%i",respuesta);
-			if (respuesta = "s") continuar = false;
+			if (respuesta = 's') continuar = false;
 
 			} while(continuar);
 			do
@@ -80,8 +82,8 @@ int main(void) {
 				printf( "\nIntroduzca el nuevo titulo : ");
 				fflush(stdout);
 				scanf("%c",modificacion);
-				statement = "UPDATE NOTICIA SET TITULO = '"+ modificacion +"' WHERE ID = "+ noticia +";";
-				ejecutarComandoBD(statement);
+				//statement = "UPDATE NOTICIA SET TITULO = '"+ modificacion +"' WHERE ID = "+ noticia +";";
+				//ejecutarComandoBD(statement);
 				printf( "\nEl titulo ha sido modificado ");
 				fflush(stdout);
 				break;
@@ -89,8 +91,8 @@ int main(void) {
 				printf( "\nIntroduzca el nuevo autor : ");
 				fflush(stdout);
 				scanf("%c",modificacion);
-				statement = "UPDATE NOTICIA SET AUTOR = '"+ modificacion +"' WHERE ID = "+ noticia +";";
-				ejecutarComandoBD(statement);
+				//statement = "UPDATE NOTICIA SET AUTOR = '"+ modificacion +"' WHERE ID = "+ noticia +";";
+				//ejecutarComandoBD(statement);
 				printf( "\nEl autor  ha sido modificado ");
 				fflush(stdout);
 				break;
@@ -98,7 +100,7 @@ int main(void) {
 					printf( "\nIntroduzca la nueva descripcion : ");
 					fflush(stdout);
 					scanf("%c",modificacion);
-					statement =
+					/*statement =
 							"UPDATE NOTICIA SET DESC = '"
 							+
 							modificacion
@@ -106,8 +108,8 @@ int main(void) {
 							"' WHERE ID = "
 							+ noticia +
 							";"
-							;
-					ejecutarComandoBD(statement);
+							;*/
+					//ejecutarComandoBD(statement);
 					printf( "\nLa descripcion ha sido modificada ");
 					fflush(stdout);
 					break;
@@ -121,6 +123,7 @@ int main(void) {
 			}while(repetir2);
 
 			break;
+		}
 		case '3':
 		{
 			list<Noticia*> noticias;
