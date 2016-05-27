@@ -112,6 +112,7 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName){
    int i;
    for(i=0; i<argc; i++){
       printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+      fflush(stdout);
    }
    printf("\n");
    return 0;
@@ -382,7 +383,8 @@ Noticia* get(list<Noticia*>* _list, int _i){
 	 conectarBD(db,rc);
  	 char *zErrMsg = 0;
  		   const char* data = "Callback function called";
-
+ 		   printf(data);
+ 		  printf(statement);
  	rc = sqlite3_exec(db, statement, callback, (void*)data, &zErrMsg);
  	   if( rc != SQLITE_OK ){
  	      fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -397,7 +399,7 @@ Noticia* get(list<Noticia*>* _list, int _i){
  	   return devolver;
 
 }
- void exportarXML(){
+ /*void exportarXML(){
  	sqlite3 *db;
  	char *zErrMsg = 0;
  	int rc,rc1;
@@ -407,12 +409,12 @@ Noticia* get(list<Noticia*>* _list, int _i){
  	string sqlt;
 
  	const char* data = "Callback function called";
- 	/* Open database */
+ 	// Open database
  	//rc = sqlite3_open("xmlbd.s3db", &db);
 
  	conectarBD(db,0);
  	int (*callback)(void*, int, char**, char**);
- 	/* Create SQL statement */
+ 	// Create SQL statement
  	int i,var;
  	rc1 = sqlite3_exec(db, "select count(*) from NOTICIA", callback, (void*)data, &zErrMsg);
  	for(i = 0; i<rc1; i++){
@@ -450,4 +452,4 @@ Noticia* get(list<Noticia*>* _list, int _i){
  		fprintf(stdout, "Operation done successfully\n");
  	}
  	sqlite3_close(db);
- }
+ }*/

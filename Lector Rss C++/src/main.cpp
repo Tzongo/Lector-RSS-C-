@@ -48,7 +48,7 @@ int main(void) {
 			repetir2 = true;
 			do
 			{
-			statement = "SELECT COD_NOT,TITULO from NOTICIA";
+			statement = "SELECT COD_NOT,TITULO from NOTICIA;";
 			ejecutarComandoBD(&statement[0u]);
 			printf("\nIntroduzca el codigo de la noticia que desea modificar");
 			fflush(stdout);
@@ -82,8 +82,12 @@ int main(void) {
 				printf( "\nIntroduzca el nuevo titulo : ");
 				fflush(stdout);
 				scanf("%c",modificacion);
-				//statement = "UPDATE NOTICIA SET TITULO = '"+ modificacion +"' WHERE ID = "+ noticia +";";
-				//ejecutarComandoBD(statement);
+				statement = "UPDATE NOTICIA SET TITULO = '";
+				statement.append(modificacion);
+				statement.append("' WHERE ID = ");
+				statement.append(noticia);
+				statement.append(";");
+				ejecutarComandoBD(&statement[0u]);
 				printf( "\nEl titulo ha sido modificado ");
 				fflush(stdout);
 				break;
@@ -91,8 +95,12 @@ int main(void) {
 				printf( "\nIntroduzca el nuevo autor : ");
 				fflush(stdout);
 				scanf("%c",modificacion);
-				//statement = "UPDATE NOTICIA SET AUTOR = '"+ modificacion +"' WHERE ID = "+ noticia +";";
-				//ejecutarComandoBD(statement);
+				statement = "UPDATE NOTICIA SET AUTOR = '";
+				statement.append(modificacion);
+				statement.append("' WHERE ID = ");
+				statement.append(noticia);
+				statement.append(";");
+				ejecutarComandoBD(&statement[0u]);
 				printf( "\nEl autor  ha sido modificado ");
 				fflush(stdout);
 				break;
@@ -100,16 +108,12 @@ int main(void) {
 					printf( "\nIntroduzca la nueva descripcion : ");
 					fflush(stdout);
 					scanf("%c",modificacion);
-					/*statement =
-							"UPDATE NOTICIA SET DESC = '"
-							+
-							modificacion
-							+
-							"' WHERE ID = "
-							+ noticia +
-							";"
-							;*/
-					//ejecutarComandoBD(statement);
+					statement =	"UPDATE NOTICIA SET DESC = '";
+					statement.append(modificacion);
+					statement.append("' WHERE ID = ");
+					statement.append(noticia);
+					statement.append(";");
+					ejecutarComandoBD(&statement[0u]);
 					printf( "\nLa descripcion ha sido modificada ");
 					fflush(stdout);
 					break;
