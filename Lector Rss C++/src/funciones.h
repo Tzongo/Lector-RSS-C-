@@ -30,5 +30,6 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias);
 Noticia* get(list<Noticia*>* _list, int _i);
 int ejecutarComandoBD( char * statement);
 void exportarXML();
+void getTableData(char * statement);
 
 #endif /* FUNCIONES_H_ */

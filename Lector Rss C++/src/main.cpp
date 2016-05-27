@@ -49,7 +49,8 @@ int main(void) {
 			do
 			{
 			statement = "SELECT COD_NOT,TITULO from NOTICIA;";
-			ejecutarComandoBD(&statement[0u]);
+			getTableData(&statement[0u]);
+			//ejecutarComandoBD(&statement[0u]);
 			printf("\nIntroduzca el codigo de la noticia que desea modificar");
 			fflush(stdout);
 			scanf("%c",noticia);
@@ -57,7 +58,7 @@ int main(void) {
 			statement = "SELECT * from NOTICIA where COD_NOT =  ";
 			statement.append(noticia);
 			statement.append(";");
-			ejecutarComandoBD(&statement[0u]);
+			//ejecutarComandoBD(&statement[0u]);
 			printf( "\n¿Es esta la noticia que quieres modificar? (s/n) ");
 			fflush(stdout);
 			scanf("%i",respuesta);

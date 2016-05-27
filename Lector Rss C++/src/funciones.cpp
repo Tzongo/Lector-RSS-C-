@@ -138,6 +138,7 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 	string sql2 ="INSERT INTO XML (NOM_XML, RUTA)VALUES ('" + nombreRSS + "', 'Lector Rss C++/src/"+nombreRSS+".xml');";
 //	sql2.append(nombreRSS.c_str());
 //	sql2.append("');");
+
 	const char *csql2 = sql2.c_str();
 	rc = sqlite3_exec(db, csql2, callback, 0, &zErrMsg);
 
@@ -147,14 +148,16 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias){
 	   }else{
 	      fprintf(stdout, "Records created successfully1\n");
 	   }
+
+	   ejecutarComandoBD(&("SELECT COD_XML FROM XML WHERE NOM_XML LIKE '"+nombreRSS+"';")[0u]);
 	unsigned int i;
 	for(i = 0; i<noticias->size(); i++){
-		sql.append("INSERT INTO NOTICIA (TITULO,AUTOR,DESCRIPCION)VALUES ( '");
-		sql.append(get(noticias,i)->getTitulo().c_str());
+		sql.append("INSERT INTO NOTICIA (TITULO,AUTOR,DESC)VALUES ( '");
+		sql.append(get(noticias,i)->getTitulo());
 		sql.append("', '");
-		sql.append(get(noticias,i)->getAutor().c_str());
+		sql.append(get(noticias,i)->getAutor());
 		sql.append("', '");
-		sql.append(get(noticias,i)->getDescripcion().c_str());
+		sql.append(get(noticias,i)->getDescripcion());
 		sql.append("' );");
 	}
 	const char *csql = sql.c_str();
@@ -374,7 +377,43 @@ Noticia* get(list<Noticia*>* _list, int _i){
     }
     return *it;
 }
+ void getTableData(char * statement)
+ {
+	 printf(statement);
+     sqlite3_stmt *statement2;
+     sqlite3* db;
+     int rc;
+     conectarBD(db,rc);
+     char *query = statement;
 
+     if ( sqlite3_prepare(db, query, -1, &statement2, 0 ) == SQLITE_OK )
+     {
+         int ctotal = sqlite3_column_count(statement2);
+         int res = 0;
+
+         while ( 1 )
+         {
+             res = sqlite3_step(statement2);
+
+             if ( res == SQLITE_ROW )
+             {
+                 for ( int i = 0; i < ctotal; i++ )
+                 {
+                     string s = (char*)sqlite3_column_text(statement2, i);
+                     // print or format the output as you want
+                     cout << s << " " ;
+                 }
+                 cout << endl;
+             }
+
+             if ( res == SQLITE_DONE || res==SQLITE_ERROR)
+             {
+                 cout << "done " << endl;
+                 break;
+             }
+         }
+     }
+ }
  int ejecutarComandoBD( char * statement)
  {
 	 int devolver;
@@ -383,8 +422,6 @@ Noticia* get(list<Noticia*>* _list, int _i){
 	 conectarBD(db,rc);
  	 char *zErrMsg = 0;
  		   const char* data = "Callback function called";
- 		   printf(data);
- 		  printf(statement);
  	rc = sqlite3_exec(db, statement, callback, (void*)data, &zErrMsg);
  	   if( rc != SQLITE_OK ){
  	      fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -424,9 +461,9 @@ Noticia* get(list<Noticia*>* _list, int _i){
  		doc = fopen(cnom,"a+");
  		for (var = 0; var < rc1; ++var) {
 
- 			sqla = "select AUTOR from NOTICIA  where COD_XML = %i and COD_NOT=%i",i,var;
- 			sqlt = "select TITULO from NOTICIA  where COD_XML = %i and COD_NOT=%i",i,var;
- 			sqld = "select DESCRIPCION from NOTICIA  where COD_XML = %i and COD_NOT=%i",i,var;
+ 			sqla = "select AUTOR from NOTICIA  where COD_XML = "+i+" and COD_NOT = "+var;
+ 			sqlt = "select TITULO from NOTICIA  where COD_XML = "+i+" and COD_NOT="+var;
+ 			sqld = "select DESCRIPCION from NOTICIA  where COD_XML = "+i+" and COD_NOT="+var;
 
  			const char *csqld = sqld.c_str();
  			const char *csqlt = sqlt.c_str();
