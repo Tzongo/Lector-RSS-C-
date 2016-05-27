@@ -39,10 +39,79 @@ int main(void) {
 			break;
 		case '2':
 			char*  statement;
-			statement = "SELECT * from XML";
-			printf("\nLista de XML : \n");
-			// No encuentro donde esta ahora la bd :/
+			string noticia;
+			bool continuar;
+			continuar = true;
+			int respuesta;
+			string modificacion;
+			bool repetir2;
+			repetir2 = true;
+			do
+			{
+			statement = "SELECT COD_NOT,TITULO from NOTICIA";
 			ejecutarComandoBD(statement);
+			printf("\nIntroduzca el codigo de la noticia que desea modificar");
+			fflush(stdout);
+			scanf("%s",noticia);
+			printf( "\n ");
+			statement = "SELECT * from NOTICIA where COD_NOT = " + noticia + ";";
+			ejecutarComandoBD(statement);
+			printf( "\n¿Es esta la noticia que quieres modificar? (s/n) ");
+			fflush(stdout);
+			scanf("%i",respuesta);
+			if (respuesta == "s") continuar = false;
+
+			} while(continuar);
+			do
+			{
+			printf( "\n¿Que desea modificar?  ");
+			printf("\n"
+					"1.\tTitulo\n"
+					"2.\tAutor\n"
+					"3.\tDescripcion\n"
+					"4.\tSalir\n\n"
+					"Introduzca numero de la funcion deseada:\n");
+			fflush(stdout);
+			char resultado;
+			scanf("%i",respuesta);
+			switch(respuesta)
+			{
+			case '1':
+				printf( "\nIntroduzca el nuevo titulo : ");
+				fflush(stdout);
+				scanf("%s",modificacion);
+				statement = "UPDATE NOTICIA SET TITULO = '"+ modificacion +"' WHERE ID = "+ noticia +";";
+				ejecutarComandoBD(statement);
+				printf( "\nEl titulo ha sido modificado ");
+				fflush(stdout);
+				break;
+			case '2':
+				printf( "\nIntroduzca el nuevo autor : ");
+				fflush(stdout);
+				scanf("%s",modificacion);
+				statement = "UPDATE NOTICIA SET AUTOR = '"+ modificacion +"' WHERE ID = "+ noticia +";";
+				ejecutarComandoBD(statement);
+				printf( "\nEl autor  ha sido modificado ");
+				fflush(stdout);
+				break;
+			case '3':
+					printf( "\nIntroduzca la nueva descripcion : ");
+					fflush(stdout);
+					scanf("%s",modificacion);
+					statement = "UPDATE NOTICIA SET DESC = '"+ modificacion +"' WHERE ID = "+ noticia +";";
+					ejecutarComandoBD(statement);
+					printf( "\nLa descripcion ha sido modificada ");
+					fflush(stdout);
+					break;
+			case '4':
+				repetir2 = false;
+			break;
+			default:
+				printf("\nï¿½Opcion incorrecta!\n\n");
+				break;
+			}
+			}while(repetir2);
+
 			break;
 		case '3':
 		{
