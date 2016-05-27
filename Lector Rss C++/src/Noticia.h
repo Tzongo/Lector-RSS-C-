@@ -20,15 +20,18 @@ public:
 	string getAutor(void) ;
 	string getDescripcion(void) ;
 	string getTitulo(void) ;
+	int getId(void);
 	void setAutor(string autor) ;
 	void setDescripcion(string desc) ;
 	void setTitulo(string titulo) ;
+	void setId(int id);
 
 
 private:
 	string titulo;
 	string autor;
 	string descripcion;
+	int id;
 };
 
 #endif /* NOTICIA_H_ */

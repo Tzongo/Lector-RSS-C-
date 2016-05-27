@@ -51,7 +51,9 @@ int main(void) {
 			statement = "SELECT COD_NOT,TITULO from NOTICIA;";
 			const char *csql2 = statement.c_str();
 			char *csql3=(char*) csql2;
-			ejecutarComandoBD(csql3);
+			//ejecutarComandoBD(csql3);
+			list<Noticia*>* noticias;
+			getTableData(csql3,noticias);
 			printf("\nIntroduzca el codigo de la noticia que desea modificar");
 			fflush(stdout);
 			scanf("%c",noticia);
