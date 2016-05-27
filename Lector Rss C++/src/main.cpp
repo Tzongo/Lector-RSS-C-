@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <list>
 #include "sqlite3.h"
+#include <sstream>
 using namespace std;
 
 int main(void) {
@@ -18,7 +19,8 @@ int main(void) {
 	bool repetir;
 	Noticia* n;
 	string  statement;
-
+	string result;
+	int noticia;
 	do {
 		repetir = true;
 		funcMenu = mostrarMenu();
@@ -46,7 +48,7 @@ int main(void) {
 			break;
 		case '2':{
 			//string  statement;
-			char* noticia;
+
 			bool continuar;
 			continuar = true;
 			char respuesta;
@@ -58,16 +60,26 @@ int main(void) {
 			statement = "SELECT COD_NOT,TITULO from NOTICIA;";
 			const char *csql2 = statement.c_str();
 			char *csql3=(char*) csql2;
-			//ejecutarComandoBD(csql3);
-			list<Noticia*>* noticias;
-			getTableData(csql3,noticias);
+			ejecutarComandoBD(csql3);
+			//getTableData(csql3,noticias);
 			printf("\nIntroduzca el codigo de la noticia que desea modificar");
 			fflush(stdout);
-			scanf("%c",noticia);
+			cin >> noticia ;
+			cout << endl;
+			//scanf("%i",noticia);
 			printf( "\n ");
 			statement = "SELECT * from NOTICIA where COD_NOT =  ";
-			statement.append(noticia);
+
+
+
+			ostringstream convert;
+
+			convert << noticia;
+
+			result = convert.str();
+			statement.append(result);
 			statement.append(";");
+			printf(statement);
 			//ejecutarComandoBD(&statement[0u]);
 			printf( "\n¿Es esta la noticia que quieres modificar? (s/n) ");
 			fflush(stdout);
@@ -96,7 +108,7 @@ int main(void) {
 				statement = "UPDATE NOTICIA SET TITULO = '";
 				statement.append(modificacion);
 				statement.append("' WHERE ID = ");
-				statement.append(noticia);
+				statement.append(result);
 				statement.append(";");
 				ejecutarComandoBD(&statement[0u]);
 				printf( "\nEl titulo ha sido modificado ");
@@ -109,7 +121,7 @@ int main(void) {
 				statement = "UPDATE NOTICIA SET AUTOR = '";
 				statement.append(modificacion);
 				statement.append("' WHERE ID = ");
-				statement.append(noticia);
+				statement.append(result);
 				statement.append(";");
 				ejecutarComandoBD(&statement[0u]);
 				printf( "\nEl autor  ha sido modificado ");
@@ -122,7 +134,7 @@ int main(void) {
 					statement =	"UPDATE NOTICIA SET DESC = '";
 					statement.append(modificacion);
 					statement.append("' WHERE ID = ");
-					statement.append(noticia);
+					statement.append(result);
 					statement.append(";");
 					ejecutarComandoBD(&statement[0u]);
 					printf( "\nLa descripcion ha sido modificada ");
@@ -161,6 +173,7 @@ int main(void) {
 		}
 			break;
 		case '4':
+			//exportarXML();
 			repetir = false;
 			break;
 		default:
