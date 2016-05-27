@@ -17,6 +17,7 @@
 #include <list>
 #include "sqlite3.h"
 #include <iostream>
+#include <sstream>
 #include <typeinfo>
 using namespace std;
 char mostrarMenu() {
@@ -24,8 +25,7 @@ char mostrarMenu() {
 			"1.\tVisualizar RSS\n"
 			"2.\tEditar RSS\n"
 			"3.\tCrear RSS\n"
-			"4.\tInformacion RSS\n"
-			"5.\tSalir\n\n"
+			"4.\tSalir\n\n"
 			"Introduzca numero de la funcion deseada:\n");
 	fflush(stdout);
 	char resultado;
@@ -112,7 +112,7 @@ int callback(void *NotUsed, int argc, char **argv, char **azColName) {
 	return 0;
 }
 
-list<Noticia*>* getTableData(char* query,list<Noticia*>* noticias) {
+list<Noticia*>* getTableData(char* query, list<Noticia*>* noticias) {
 	sqlite3_stmt *statement;
 	sqlite3* db;
 	int rc;
@@ -132,7 +132,8 @@ list<Noticia*>* getTableData(char* query,list<Noticia*>* noticias) {
 
 		while (1) {
 			res = sqlite3_step(statement);
-			Noticia* n;n = new Noticia();
+			Noticia* n;
+			n = new Noticia();
 			if (res == SQLITE_ROW) {
 
 				for (int i = 0; i < ctotal; i++) {
@@ -195,7 +196,7 @@ int getTableDataID(char* query) {
 
 					switch (i) {
 					case 0:
-						a=atoi(s.c_str());
+						a = atoi(s.c_str());
 						break;
 					default:
 						break;
@@ -245,20 +246,33 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias) {
 	} else {
 		fprintf(stdout, "Records created successfully1\n");
 	}
-
-	ejecutarComandoBD(
+	int a;
+	a = getTableDataID(
 			(char*) ("SELECT COD_XML FROM XML WHERE NOM_XML LIKE '" + nombreRSS
 					+ "';").c_str());
+
 	unsigned int i;
+
+	string result;
+
+	ostringstream convert;
+
+	convert << a;
+
+	result = convert.str();
+
 	for (i = 0; i < noticias->size(); i++) {
 		/*sql.append("INSERT INTO NOTICIA (TITULO,AUTOR,DESC)VALUES ( '");
-		sql.append(get(noticias, i)->getTitulo());
-		sql.append("', '");
-		sql.append(get(noticias, i)->getAutor());
-		sql.append("', '");
-		sql.append(get(noticias, i)->getDescripcion());
-		sql.append("' );");*/
-		sql += "INSERT INTO NOTICIA (TITULO,AUTOR,DESC)VALUES ( '"+get(noticias, i)->getTitulo()+"', '"+get(noticias, i)->getAutor()+"', '"+get(noticias, i)->getDescripcion()+"' );";
+		 sql.append(get(noticias, i)->getTitulo());
+		 sql.append("', '");
+		 sql.append(get(noticias, i)->getAutor());
+		 sql.append("', '");
+		 sql.append(get(noticias, i)->getDescripcion());
+		 sql.append("' );");*/
+		sql += "INSERT INTO NOTICIA (TITULO,AUTOR,DESC, COD_XML)VALUES ( '"
+				+ get(noticias, i)->getTitulo() + "', '"
+				+ get(noticias, i)->getAutor() + "', '"
+				+ get(noticias, i)->getDescripcion() + "',"+result+");";
 	}
 	const char *csql = sql.c_str();
 	rc = sqlite3_exec(db, csql, callback, 0, &zErrMsg);

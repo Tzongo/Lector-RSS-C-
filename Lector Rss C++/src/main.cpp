@@ -161,23 +161,6 @@ int main(void) {
 		}
 			break;
 		case '4':
-			printf("Introduce nombre (con extension) del archivo: \n");
-			fflush(stdout);
-			char nombreInf[20];
-			scanf("%s", nombreInf);
-			fflush(stdin);
-			//Info inform; inform = infoRss(nombreInf);
-			printf("%s\n\n", nombreInf);
-			//printf("\tTITULO DEL RSS:\n\n");
-			//printf("%s", inform.tituloRss);
-			printf("\n\tAUTOR DEL RSS:\n\n");
-			//printf("%s", inform.autorRss);
-			printf("\n\tITEMS DEL RSS:\n\n");
-			//printf("%s", inform.items);
-			printf("\n\tFUENTES DEL RSS:\n\n");
-			//printf("%s\n", inform.fuentes);
-			break;
-		case '5':
 			repetir = false;
 			break;
 		default:
