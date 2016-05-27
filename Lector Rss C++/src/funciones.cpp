@@ -251,13 +251,14 @@ void almacenarEnBD(string nombreRSS, list<Noticia*>* noticias) {
 					+ "';").c_str());
 	unsigned int i;
 	for (i = 0; i < noticias->size(); i++) {
-		sql.append("INSERT INTO NOTICIA (TITULO,AUTOR,DESC)VALUES ( '");
+		/*sql.append("INSERT INTO NOTICIA (TITULO,AUTOR,DESC)VALUES ( '");
 		sql.append(get(noticias, i)->getTitulo());
 		sql.append("', '");
 		sql.append(get(noticias, i)->getAutor());
 		sql.append("', '");
 		sql.append(get(noticias, i)->getDescripcion());
-		sql.append("' );");
+		sql.append("' );");*/
+		sql += "INSERT INTO NOTICIA (TITULO,AUTOR,DESC)VALUES ( '"+get(noticias, i)->getTitulo()+"', '"+get(noticias, i)->getAutor()+"', '"+get(noticias, i)->getDescripcion()+"' );";
 	}
 	const char *csql = sql.c_str();
 	rc = sqlite3_exec(db, csql, callback, 0, &zErrMsg);
